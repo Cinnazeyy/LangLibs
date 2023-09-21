@@ -1,4 +1,4 @@
-package li.cinnazeyy.langlibs.core;
+package li.cinnazeyy.langlibs.core.file;
 
 import org.bukkit.inventory.ItemStack;
 

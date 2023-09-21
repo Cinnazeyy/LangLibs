@@ -72,6 +72,21 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- MariaDB Connector -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.7.4</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Hikari-CP (MariaDB) -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- Apache Commons IO -->
         <dependency>

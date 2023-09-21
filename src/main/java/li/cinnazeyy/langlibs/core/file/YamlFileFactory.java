@@ -1,5 +1,6 @@
-package li.cinnazeyy.langlibs.core;
+package li.cinnazeyy.langlibs.core.file;
 
+import li.cinnazeyy.langlibs.core.file.YamlFile;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;

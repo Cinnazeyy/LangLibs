@@ -1,4 +1,4 @@
-package li.cinnazeyy.langlibs.core;
+package li.cinnazeyy.langlibs.core.file;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
