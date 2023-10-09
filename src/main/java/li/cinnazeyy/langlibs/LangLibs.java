@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.logging.Level;
 
 public final class LangLibs extends JavaPlugin {
-    private static final String VERSION = "1.0";
+    private static final String VERSION = "1.1";
     private static LangLibs plugin;
     private YamlConfiguration config;
     @Override
