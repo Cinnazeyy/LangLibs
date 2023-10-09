@@ -3,3 +3,6 @@ database:
   name: ""
   username: ""
   password: ""
+languageSelection:
+  enabled: true
+  useHeads: true

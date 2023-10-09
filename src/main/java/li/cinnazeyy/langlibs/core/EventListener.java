@@ -1,6 +1,5 @@
 package li.cinnazeyy.langlibs.core;
 
-import com.destroystokyo.paper.ClientOption;
 import li.cinnazeyy.langlibs.LangLibs;
 import li.cinnazeyy.langlibs.core.language.LangLibAPI;
 import org.bukkit.Bukkit;
@@ -20,9 +19,11 @@ public class EventListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Bukkit.getScheduler().runTaskAsynchronously(LangLibs.getPlugin(), () -> {
-            try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(player.getUniqueId()).executeQuery()) {
-                if (!rsUser.next()) LangLibAPI.setPlayerLang(player,player.getClientOption(ClientOption.LOCALE));
-                else LangLibAPI.setPlayerLang(player,rsUser.getString(1));
+            String uuid = player.getUniqueId().toString();
+            try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(uuid).executeQuery()) {
+                if (!rsUser.next()) LangLibAPI.setPlayerLang(player,"en_GB");
+                else LangLibAPI.setPlayerLang(player,rsUser.getString(2));
+                DatabaseConnection.closeResultSet(rsUser);
             } catch (SQLException e) {
                 Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
             }
@@ -31,7 +32,6 @@ public class EventListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDisconnect(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
         LangLibAPI.removePlayerLang(event.getPlayer());
     }
 }

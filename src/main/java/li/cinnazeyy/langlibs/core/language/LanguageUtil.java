@@ -21,11 +21,8 @@ public class LanguageUtil extends YamlFileFactory {
         languageFiles = langFiles;
 
         Arrays.stream(langFiles).forEach(lang -> {
-            if (!lang.getFile().exists()) {
-                createFile(lang);
-            } else if (reloadFile(lang) && lang.getDouble(CONFIG_VERSION_PATH) != lang.getVersion()) {
-                updateFile(lang);
-            }
+            if (!lang.getFile().exists()) createFile(lang);
+            else if (reloadFile(lang) && lang.getDouble(CONFIG_VERSION_PATH) != lang.getVersion()) updateFile(lang);
             reloadFile(lang);
         });
     }
@@ -50,7 +47,7 @@ public class LanguageUtil extends YamlFileFactory {
         String locale = LangLibAPI.getPlayerLang(player);
 
         return Arrays.stream(languageFiles)
-                .filter(lang -> lang.getTag().equalsIgnoreCase(locale))
+                .filter(lang -> lang.getLanguage().toString().equalsIgnoreCase(locale))
                 .findFirst()
                 .orElseGet(() -> Arrays.stream(languageFiles)
                         .filter(lang -> lang.additionalLang != null && Arrays.stream(lang.additionalLang).anyMatch(l -> l.equalsIgnoreCase(locale)))

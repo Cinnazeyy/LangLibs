@@ -1,5 +1,6 @@
 package li.cinnazeyy.langlibs.core.file;
 
+import li.cinnazeyy.langlibs.core.Language;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.InputStream;
@@ -8,16 +9,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LanguageFile extends YamlFile {
-    private final String tag;
+    private final Language language;
     public String[] additionalLang;
 
-    public LanguageFile(String lang, double version) {
+    public LanguageFile(Language lang, double version) {
         super(Paths.get("lang", lang + ".yml"), version);
-
-        this.tag = lang;
+        this.language = lang;
     }
 
-    public LanguageFile(String lang, double version, String... additionalLang) {
+    public LanguageFile(Language lang, double version, String... additionalLang) {
         this(lang, version);
         this.additionalLang = additionalLang;
     }
@@ -29,15 +29,11 @@ public class LanguageFile extends YamlFile {
 
     public String getTranslation(String key, String... args) {
         String translation = getTranslation(key);
-        for (int i = 0; i < args.length; i++) {
-            translation = translation.replace("{" + i + "}", args[i]);
-        }
+        for (int i = 0; i < args.length; i++) translation = translation.replace("{" + i + "}", args[i]);
         return translation;
     }
 
-    public List<String> getTranslations(String key) {
-        return getStringList(key);
-    }
+    public List<String> getTranslations(String key) { return getStringList(key); }
 
     public List<String> getTranslations(String key, String... args) {
         String[] translations = getTranslations(key).toArray(new String[0]);
@@ -49,18 +45,7 @@ public class LanguageFile extends YamlFile {
         return Arrays.asList(translations);
     }
 
-    public String getTag() {
-        return tag;
-    }
-
-    public String getLangName() {
-        return getString("lang.name");
-    }
-
-    public ItemStack getHead() {
-        //return AlpsUtils.getItemHead(new CustomHead(getString(LANG_HEAD_ID_PATH)));
-        return null;
-    }
+    public Language getLanguage() { return language;}
 
     @Override
     public InputStream getDefaultFileStream() {
@@ -68,7 +53,5 @@ public class LanguageFile extends YamlFile {
     }
 
     @Override
-    public int getMaxConfigWidth() {
-        return 400;
-    }
+    public int getMaxConfigWidth() { return 400; }
 }

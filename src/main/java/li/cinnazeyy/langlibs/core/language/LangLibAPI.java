@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -27,8 +29,9 @@ public class LangLibAPI {
         String lang = playerLocale.get(player.getUniqueId());
         if (lang != null) return lang;
         else {
-            try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(player.getUniqueId()).executeQuery()) {
-                if (rsUser.next()) playerLocale.put(UUID.fromString(rsUser.getString(0)),rsUser.getString(1));
+            try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(player.getUniqueId().toString()).executeQuery()) {
+                if (rsUser.next()) playerLocale.put(UUID.fromString(rsUser.getString(1)),rsUser.getString(2));
+                DatabaseConnection.closeResultSet(rsUser);
             } catch (SQLException e) {
                 Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
             }
@@ -38,15 +41,36 @@ public class LangLibAPI {
 
     public static void setPlayerLang(Player player, String lang) {
         playerLocale.put(player.getUniqueId(), lang);
-        try {
-            DatabaseConnection.createStatement("INSERT INTO langUsers (uuid, lang) VALUES (?, ?) ON DUPLICATE KEY UPDATE uuid=? lang=?")
-                    .setValue(player)
-                    .setValue(lang)
-                    .setValue(player)
-                    .setValue(lang).executeUpdate();
+        String uuid = player.getUniqueId().toString();
+
+        //TODO: Fix SQL Library
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "INSERT INTO langUsers (uuid, lang) VALUES (?, ?) ON DUPLICATE KEY UPDATE uuid = ?, lang = ?";
+
+            // Create a PreparedStatement
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                // Set the parameter values
+                preparedStatement.setString(1, uuid);
+                preparedStatement.setString(2, lang);
+                preparedStatement.setString(3, uuid);
+                preparedStatement.setString(4, lang);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
+            }
         } catch (SQLException e) {
             Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
         }
+
+        /*try {
+            DatabaseConnection.createStatement("INSERT INTO langUsers (uuid, lang) VALUES (?, ?) ON DUPLICATE KEY UPDATE uuid = ? lang = `?`")
+                    .setValue(player.getUniqueId().toString())
+                    .setValue(lang)
+                    .setValue(player.getUniqueId().toString())
+                    .setValue(lang).executeUpdate();
+        } catch (SQLException e) {
+            Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
+        }*/
     }
 
     public static void removePlayerLang(Player player) {

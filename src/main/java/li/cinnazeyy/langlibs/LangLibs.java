@@ -1,10 +1,12 @@
 package li.cinnazeyy.langlibs;
 
+import li.cinnazeyy.langlibs.commands.CMD_Language;
 import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.EventListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -38,16 +40,15 @@ public final class LangLibs extends JavaPlugin {
         // Register Events
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 
+        // Register Commands
+        final CommandMap commandMap = Bukkit.getServer().getCommandMap();
+        if (config.getBoolean("languageSelection.enabled")) commandMap.register("language", new CMD_Language("language"));
+
         // Plugin startup logic
-        Bukkit.getConsoleSender().sendMessage(Component.text("---[", NamedTextColor.DARK_GRAY)
+        Bukkit.getConsoleSender().sendMessage(Component.text("[", NamedTextColor.DARK_GRAY)
                 .append(Component.text("LangLibs", NamedTextColor.AQUA))
                 .append(Component.text("v" + VERSION,NamedTextColor.GOLD))
-                .append(Component.text("]---")));
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+                .append(Component.text("] Loaded successfully!")));
     }
 
     public static LangLibs getPlugin() { return plugin; }

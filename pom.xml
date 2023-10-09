@@ -6,7 +6,7 @@
 
     <groupId>li.cinnazeyy</groupId>
     <artifactId>LangLibs</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>LangLibs</name>
@@ -62,6 +62,17 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+        <!-- Alps Repo -->
+        <repository>
+            <id>alpsbte-repo</id>
+            <url>https://mvn.alps-bte.com/repository/alps-lib/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -93,6 +104,20 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Obliviate Inventories -->
+        <dependency>
+            <groupId>com.github.hamza-cskn.obliviate-invs</groupId>
+            <artifactId>core</artifactId>
+            <version>4.1.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alpsbte.alpslib</groupId>
+            <artifactId>alpslib-utils</artifactId>
+            <version>1.0.13</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
