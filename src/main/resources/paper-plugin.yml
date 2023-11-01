@@ -4,3 +4,8 @@ main: li.cinnazeyy.langlibs.LangLibs
 api-version: '1.20'
 authors: [Cinnazeyy, R3tuxn]
 description: A universal language library for localisation
+dependencies:
+  bootstrap:
+    HeadDatabase:
+      load: BEFORE
+      required: false

@@ -16,7 +16,7 @@ public class CMD_Language extends BukkitCommand {
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String s, @NotNull String[] strings) {
         if(!(sender instanceof Player)) return true;
-        new LanguageSelectMenu((Player) sender);
+        new LanguageSelectMenu((Player) sender).open();
         return true;
     }
 }

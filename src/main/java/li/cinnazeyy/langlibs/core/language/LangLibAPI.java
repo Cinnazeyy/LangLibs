@@ -4,6 +4,7 @@ import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -58,6 +59,11 @@ public class LangLibAPI {
             } catch (SQLException e) {
                 Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
             }
+
+            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+            /*player.sendMessage(Utils.ChatUtils.getInfoMessageFormat(
+                    LangUtil.getInstance().get(getMenuPlayer(), LangPaths.Message.Info.CHANGED_LANGUAGE,
+                            LangUtil.getInstance().getLanguageFileByPlayer(getMenuPlayer()).getLanguage().toString())));*/
         } catch (SQLException e) {
             Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
         }

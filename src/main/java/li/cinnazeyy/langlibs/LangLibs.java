@@ -3,6 +3,7 @@ package li.cinnazeyy.langlibs;
 import li.cinnazeyy.langlibs.commands.CMD_Language;
 import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.EventListener;
+import mc.obliviate.inventory.InventoryAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -36,6 +37,9 @@ public final class LangLibs extends JavaPlugin {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
+        // Init Dependencies
+        new InventoryAPI(this).init();
 
         // Register Events
         getServer().getPluginManager().registerEvents(new EventListener(), this);
