@@ -3,13 +3,10 @@ package li.cinnazeyy.langlibs.core.language;
 import com.destroystokyo.paper.ClientOption;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
 import li.cinnazeyy.langlibs.core.file.YamlFileFactory;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,47 +27,19 @@ public class LanguageUtil extends YamlFileFactory {
         });
     }
 
-    public Component get(CommandSender sender, String key) {
-        return MiniMessage.miniMessage().deserialize((sender instanceof Player ?
-                getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslation(key));
-    }
-
-    @Deprecated
-    public String getString(CommandSender sender, String key) {
+    public String get(CommandSender sender, String key) {
         return (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslation(key);
     }
 
-    public Component get(CommandSender sender, String key, String... args) {
-        return MiniMessage.miniMessage().deserialize((sender instanceof Player ?
-                getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslation(key, args));
-    }
-
-    @Deprecated
-    public String getString(CommandSender sender, String key, String... args) {
+    public String get(CommandSender sender, String key, String... args) {
         return (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslation(key, args);
     }
 
-    public List<Component> getList(CommandSender sender, String key) {
-        List<String> stringTranslations = (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslations(key);
-        List<Component> translations = new ArrayList<>();
-        stringTranslations.forEach(translation -> translations.add(MiniMessage.miniMessage().deserialize(translation)));
-        return translations;
-    }
-
-    @Deprecated
-    public List<String> getStringList(CommandSender sender, String key) {
+    public List<String> getList(CommandSender sender, String key) {
         return (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslations(key);
     }
 
-    public List<Component> getList(CommandSender sender, String key, String... args) {
-        List<String> stringTranslations = (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslations(key, args);
-        List<Component> translations = new ArrayList<>();
-        stringTranslations.forEach(translation -> translations.add(MiniMessage.miniMessage().deserialize(translation)));
-        return translations;
-    }
-
-    @Deprecated
-    public List<String> getStringList(CommandSender sender, String key, String... args) {
+    public List<String> getList(CommandSender sender, String key, String... args) {
         return (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslations(key, args);
     }
 
