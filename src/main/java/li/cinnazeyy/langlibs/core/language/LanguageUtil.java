@@ -9,10 +9,10 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class LanguageUtil extends YamlFileFactory {
     private static final String CONFIG_VERSION_PATH = "config-version";
-    private final static String LANG_HEAD_ID_PATH = "lang.head-id";
     public LanguageFile[] languageFiles;
 
     public LanguageUtil(Plugin plugin) {
@@ -28,23 +28,43 @@ public class LanguageUtil extends YamlFileFactory {
     }
 
     public String get(CommandSender sender, String key) {
-        return (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslation(key);
+        return (sender instanceof Player ? getLanguageFileByPlayer(((Player) sender).getUniqueId()) :
+                languageFiles[0]).getTranslation(key);
+    }
+
+    public String get(UUID playerUUID, String key) {
+        return getLanguageFileByPlayer(playerUUID).getTranslation(key);
     }
 
     public String get(CommandSender sender, String key, String... args) {
-        return (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslation(key, args);
+        return (sender instanceof Player ? getLanguageFileByPlayer(((Player) sender).getUniqueId()) :
+                languageFiles[0]).getTranslation(key, args);
+    }
+
+    public String get(UUID playerUUID, String key, String... args) {
+        return getLanguageFileByPlayer(playerUUID).getTranslation(key, args);
     }
 
     public List<String> getList(CommandSender sender, String key) {
-        return (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslations(key);
+        return (sender instanceof Player ? getLanguageFileByPlayer(((Player) sender).getUniqueId()) :
+                languageFiles[0]).getTranslations(key);
+    }
+
+    public List<String> getList(UUID playerUUID, String key) {
+        return getLanguageFileByPlayer(playerUUID).getTranslations(key);
     }
 
     public List<String> getList(CommandSender sender, String key, String... args) {
-        return (sender instanceof Player ? getLanguageFileByPlayer((Player) sender) : languageFiles[0]).getTranslations(key, args);
+        return (sender instanceof Player ? getLanguageFileByPlayer(((Player) sender).getUniqueId()) :
+                languageFiles[0]).getTranslations(key, args);
     }
 
-    public LanguageFile getLanguageFileByPlayer(Player player) {
-        String locale = LangLibAPI.getPlayerLang(player);
+    public List<String> getList(UUID playerUUID, String key, String... args) {
+        return getLanguageFileByPlayer(playerUUID).getTranslations(key, args);
+    }
+
+    public LanguageFile getLanguageFileByPlayer(UUID playerUUID) {
+        String locale = LangLibAPI.getPlayerLang(playerUUID);
 
         return Arrays.stream(languageFiles)
                 .filter(lang -> lang.getLanguage().toString().equalsIgnoreCase(locale))

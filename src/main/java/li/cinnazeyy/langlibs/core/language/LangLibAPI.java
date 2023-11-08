@@ -26,18 +26,18 @@ public class LangLibAPI {
         Bukkit.getConsoleSender().sendMessage(Component.text("Registered plugin " + plugin.getName() + " to the language system"));
     }
 
-    public static String getPlayerLang(Player player) {
-        String lang = playerLocale.get(player.getUniqueId());
+    public static String getPlayerLang(UUID playerUUID) {
+        String lang = playerLocale.get(playerUUID);
         if (lang != null) return lang;
         else {
-            try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(player.getUniqueId().toString()).executeQuery()) {
+            try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(playerUUID.toString()).executeQuery()) {
                 if (rsUser.next()) playerLocale.put(UUID.fromString(rsUser.getString(1)),rsUser.getString(2));
                 DatabaseConnection.closeResultSet(rsUser);
             } catch (SQLException e) {
                 Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
             }
         }
-        return playerLocale.get(player.getUniqueId());
+        return playerLocale.get(playerUUID);
     }
 
     public static void setPlayerLang(Player player, String lang) {
