@@ -9,13 +9,31 @@ public enum Language {
     ru_RU("Русский", "Россия","4406", 2005),
     zh_CN("简体中文", "中国大陆","23238",2006),
     zh_TW("繁體中文", "台灣","11627", 2007);
-    public final String Region, Name, HeadId;
-    public final int ItemModel;
+
+    private final String name, region, headId;
+    private final int itemModel;
+
     Language(String name, String region, String headId, int itemModel) {
-        this.Name = name;
-        this.Region = region;
-        this.HeadId = headId;
-        this.ItemModel = itemModel;
+        this.name = name;
+        this.region = region;
+        this.headId = headId;
+        this.itemModel = itemModel;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getHeadId() {
+        return headId;
+    }
+
+    public int getItemModel() {
+        return itemModel;
     }
 }
 

@@ -2,8 +2,6 @@ package li.cinnazeyy.langlibs.core;
 
 import li.cinnazeyy.langlibs.LangLibs;
 import li.cinnazeyy.langlibs.core.language.LangLibAPI;
-import li.cinnazeyy.langlibs.util.HeadUtils;
-import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,10 +33,5 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDisconnect(PlayerQuitEvent event) {
         LangLibAPI.removePlayerLang(event.getPlayer());
-    }
-
-    @EventHandler
-    public void onDatabaseLoad(DatabaseLoadEvent event) {
-        HeadUtils.loadHeadsAsync();
     }
 }

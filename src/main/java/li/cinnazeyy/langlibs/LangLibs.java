@@ -3,6 +3,7 @@ package li.cinnazeyy.langlibs;
 import li.cinnazeyy.langlibs.commands.CMD_Language;
 import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.EventListener;
+import li.cinnazeyy.langlibs.util.LangUtils;
 import mc.obliviate.inventory.InventoryAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,7 +17,7 @@ import java.io.File;
 import java.util.logging.Level;
 
 public final class LangLibs extends JavaPlugin {
-    private static final String VERSION = "1.1";
+    private static final String VERSION = "1.3";
     private static LangLibs plugin;
     private YamlConfiguration config;
     @Override
@@ -25,6 +26,9 @@ public final class LangLibs extends JavaPlugin {
 
         // Create configs
         createConfig();
+
+        // Register language heads
+        LangUtils.registerCustomHeads();
 
         // Initialize database connection
         try {

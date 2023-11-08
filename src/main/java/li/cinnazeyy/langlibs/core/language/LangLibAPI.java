@@ -18,8 +18,8 @@ import java.util.logging.Level;
 
 public class LangLibAPI {
 
-    private static HashMap<Plugin, LanguageFile[]> pluginLangFiles = new HashMap<>();
-    private static HashMap<UUID, String> playerLocale = new HashMap<>();
+    private static final HashMap<Plugin, LanguageFile[]> pluginLangFiles = new HashMap<>();
+    private static final HashMap<UUID, String> playerLocale = new HashMap<>();
 
     public static void register(Plugin plugin, LanguageFile[] langFiles) {
         pluginLangFiles.put(plugin,langFiles);
@@ -88,6 +88,4 @@ public class LangLibAPI {
         if (languageFiles == null) throw new RuntimeException("LanguageAPI has not been registered yet!");
         return languageFiles;
     }
-
-
 }
