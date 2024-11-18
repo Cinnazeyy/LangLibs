@@ -6,45 +6,68 @@ import li.cinnazeyy.langlibs.LangLibs;
 import li.cinnazeyy.langlibs.core.Language;
 import li.cinnazeyy.langlibs.core.event.LanguageChangeEvent;
 import li.cinnazeyy.langlibs.core.language.LangLibAPI;
-import mc.obliviate.inventory.Gui;
-import mc.obliviate.inventory.Icon;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.ItemStack;
+import org.ipvp.canvas.Menu;
+import org.ipvp.canvas.mask.BinaryMask;
+import org.ipvp.canvas.type.ChestMenu;
 
-import java.util.Objects;
+import static net.kyori.adventure.text.Component.empty;
+import static net.kyori.adventure.text.Component.text;
+import static net.kyori.adventure.text.format.NamedTextColor.*;
 
-public class LanguageSelectMenu extends Gui {
-    public LanguageSelectMenu(Player player) { super(player, "language-menu", "Select Language", 3); }
+public class LanguageSelectMenu {
+    private final Menu menu;
+    private final Player menuPlayer;
 
-    @Override
-    public void onOpen(InventoryOpenEvent event) {
+    public LanguageSelectMenu(Player player) {
+        menuPlayer = player;
+        menu = ChestMenu.builder(3).title(text("Select Language")).redraw(true).build();
+    }
+
+    public void open() {
+        BinaryMask.builder(menu)
+                .item(new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setName(empty()).build())
+                .pattern("000000000")
+                .pattern("000000000")
+                .pattern("111101111")
+                .build()
+                .apply(menu);
+
         for (int i = 0; i < Language.values().length; i++) {
-            addItem(i,getLanguageIcon(Language.values()[i]));
+            Language lang = Language.values()[i];
+            menu.getSlot(i).setItem(getLanguageItem(lang));
+            menu.getSlot(i).setClickHandler((p, info) -> clickLanguageItem(lang));
         }
-        for (int i = 18; i < 27; i++) {
-            addItem(i,new Icon(Material.GRAY_STAINED_GLASS_PANE));
-        }
-        addItem(22, new Icon(Material.BARRIER).setName("§l§cClose").onClick((e) -> Objects.requireNonNull(e.getClickedInventory()).close()));
-        addItem(25, new Icon(Material.SLIME_BALL));
+
+        menu.getSlot(22).setItem(new ItemBuilder(Material.BARRIER)
+                .setName(text("Close", RED).decoration(TextDecoration.BOLD, true))
+                .build());
+        menu.getSlot(22).setClickHandler((p, info) -> menu.close());
     }
 
-    private Icon getLanguageIcon(Language lang) {
+    private ItemStack getLanguageItem(Language lang) {
         boolean useHeads = LangLibs.getPlugin().getConfig().getBoolean("languageSelection.useHeads");
-        Icon icon = useHeads ?
-                new Icon(new ItemBuilder(AlpsHeadUtils.getCustomHead(lang.getHeadId())).build())
-                : new Icon(new ItemBuilder(Material.PAPER).setItemModel(lang.getItemModel()).build());
-        icon.setName("§6§l" + lang.getName() + " §r§8(§7" + lang.getRegion() + "§8)"); //TODO: Use Components instead
-        icon.onClick((event) -> clickLanguageIcon(event, lang));
-        return icon;
+
+        Component itemName = text(lang.getName(), GOLD)
+                .decoration(TextDecoration.BOLD, true)
+                .append(text(" (", DARK_GRAY))
+                .append(text(lang.getRegion(), GRAY))
+                .append(text(")", DARK_GRAY));
+
+        return useHeads ?
+                new ItemBuilder(AlpsHeadUtils.getCustomHead(lang.getHeadId())).setName(itemName).build()
+                : new ItemBuilder(Material.PAPER).setItemModel(lang.getItemModel()).setName(itemName).build();
     }
 
-    private void clickLanguageIcon(InventoryClickEvent event, Language lang) {
-        LangLibAPI.setPlayerLang(player,lang.toString());
-        LanguageChangeEvent langEvent = new LanguageChangeEvent(player,lang);
+    private void clickLanguageItem(Language lang) {
+        LangLibAPI.setPlayerLang(menuPlayer, lang.toString());
+        LanguageChangeEvent langEvent = new LanguageChangeEvent(menuPlayer, lang);
         Bukkit.getPluginManager().callEvent(langEvent);
-        Objects.requireNonNull(event.getClickedInventory()).close();
+        menu.close();
     }
 }

@@ -54,6 +54,12 @@
     </build>
 
     <repositories>
+        <!-- Alps Repo -->
+        <repository>
+            <id>alpsbte-repo</id>
+            <url>https://mvn.alps-bte.com/repository/alps-bte/</url>
+        </repository>
+
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
@@ -67,19 +73,13 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-
-        <!-- Alps Repo -->
-        <repository>
-            <id>alpsbte-repo</id>
-            <url>https://mvn.alps-bte.com/repository/alps-lib/</url>
-        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.20.2-R0.1-SNAPSHOT</version>
+            <version>1.21.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -103,15 +103,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Obliviate Inventories -->
-        <dependency>
-            <groupId>com.github.hamza-cskn.obliviate-invs</groupId>
-            <artifactId>core</artifactId>
-            <version>4.1.13</version>
+            <version>2.14.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -128,6 +120,12 @@
             <artifactId>alpslib-utils</artifactId>
             <version>1.1.0</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alpsbte</groupId>
+            <artifactId>Canvas</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>
