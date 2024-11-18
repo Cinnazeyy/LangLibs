@@ -1,7 +1,6 @@
 package li.cinnazeyy.langlibs.core.file;
 
 import li.cinnazeyy.langlibs.core.Language;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -33,7 +32,7 @@ public class LanguageFile extends YamlFile {
         return translation;
     }
 
-    public List<String> getTranslations(String key) { return getStringList(key); }
+    public List<String> getTranslations(String key) {return getStringList(key);}
 
     public List<String> getTranslations(String key, String... args) {
         String[] translations = getTranslations(key).toArray(new String[0]);
@@ -45,7 +44,7 @@ public class LanguageFile extends YamlFile {
         return Arrays.asList(translations);
     }
 
-    public Language getLanguage() { return language;}
+    public Language getLanguage() {return language;}
 
     @Override
     public InputStream getDefaultFileStream() {
@@ -53,5 +52,5 @@ public class LanguageFile extends YamlFile {
     }
 
     @Override
-    public int getMaxConfigWidth() { return 400; }
+    public int getMaxConfigWidth() {return 400;}
 }

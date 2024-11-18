@@ -1,8 +1,8 @@
 package li.cinnazeyy.langlibs.core.language;
 
+import li.cinnazeyy.langlibs.LangLibs;
 import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,7 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.logging.Level;
+
+import static net.kyori.adventure.text.Component.text;
 
 public class LangLibAPI {
 
@@ -23,7 +24,7 @@ public class LangLibAPI {
 
     public static void register(Plugin plugin, LanguageFile[] langFiles) {
         pluginLangFiles.put(plugin,langFiles);
-        Bukkit.getConsoleSender().sendMessage(Component.text("Registered plugin " + plugin.getName() + " to the language system"));
+        Bukkit.getConsoleSender().sendMessage(text("Registered plugin " + plugin.getName() + " to the language system"));
     }
 
     public static String getPlayerLang(UUID playerUUID) {
@@ -34,7 +35,7 @@ public class LangLibAPI {
                 if (rsUser.next()) playerLocale.put(UUID.fromString(rsUser.getString(1)),rsUser.getString(2));
                 DatabaseConnection.closeResultSet(rsUser);
             } catch (SQLException e) {
-                Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
+                LangLibs.getPlugin().getComponentLogger().error(text("A SQL error occurred!"), e);
             }
         }
         return playerLocale.get(playerUUID);
@@ -49,15 +50,18 @@ public class LangLibAPI {
             String sql = "INSERT INTO langUsers (uuid, lang) VALUES (?, ?) ON DUPLICATE KEY UPDATE uuid = ?, lang = ?";
 
             // Create a PreparedStatement
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                // Set the parameter values
-                preparedStatement.setString(1, uuid);
-                preparedStatement.setString(2, lang);
-                preparedStatement.setString(3, uuid);
-                preparedStatement.setString(4, lang);
-                preparedStatement.executeUpdate();
+            try {
+                assert connection != null;
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    // Set the parameter values
+                    preparedStatement.setString(1, uuid);
+                    preparedStatement.setString(2, lang);
+                    preparedStatement.setString(3, uuid);
+                    preparedStatement.setString(4, lang);
+                    preparedStatement.executeUpdate();
+                }
             } catch (SQLException e) {
-                Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
+                LangLibs.getPlugin().getComponentLogger().error(text("A SQL error occurred!"), e);
             }
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
@@ -65,7 +69,7 @@ public class LangLibAPI {
                     LangUtil.getInstance().get(getMenuPlayer(), LangPaths.Message.Info.CHANGED_LANGUAGE,
                             LangUtil.getInstance().getLanguageFileByPlayer(getMenuPlayer()).getLanguage().toString())));*/
         } catch (SQLException e) {
-            Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
+            LangLibs.getPlugin().getComponentLogger().error(text("A SQL error occurred!"), e);
         }
 
         /*try {
