@@ -36,5 +36,15 @@
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="alpsbte-repo" />
+      <option name="name" value="alpsbte-repo" />
+      <option name="url" value="https://mvn.alps-bte.com/repository/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="alpsbte-repo" />
+      <option name="name" value="alpsbte-repo" />
+      <option name="url" value="https://mvn.alps-bte.com/repository/alps-bte/" />
+    </remote-repository>
   </component>
 </project>
