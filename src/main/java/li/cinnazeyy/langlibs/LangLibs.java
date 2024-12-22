@@ -2,7 +2,6 @@ package li.cinnazeyy.langlibs;
 
 import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.EventListener;
-import li.cinnazeyy.langlibs.util.LangUtils;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,7 +13,7 @@ import java.io.File;
 import static net.kyori.adventure.text.Component.text;
 
 public final class LangLibs extends JavaPlugin {
-    private static final String VERSION = "1.3";
+    private static final String VERSION = "1.4.1";
     private static LangLibs plugin;
     private YamlConfiguration config;
     @Override
@@ -23,9 +22,6 @@ public final class LangLibs extends JavaPlugin {
 
         // Create configs
         createConfig();
-
-        // Register language heads
-        LangUtils.registerCustomHeads();
 
         // Initialize database connection
         try {
