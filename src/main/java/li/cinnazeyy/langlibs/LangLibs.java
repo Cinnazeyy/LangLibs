@@ -13,7 +13,7 @@ import java.io.File;
 import static net.kyori.adventure.text.Component.text;
 
 public final class LangLibs extends JavaPlugin {
-    private static final String VERSION = "1.4.1";
+    private static final String VERSION = "1.4.2";
     private static LangLibs plugin;
     private YamlConfiguration config;
     @Override
