@@ -3,6 +3,7 @@ package li.cinnazeyy.langlibs.core.language;
 import li.cinnazeyy.langlibs.LangLibs;
 import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class LangLibAPI {
 
     public static void register(Plugin plugin, LanguageFile[] langFiles) {
         pluginLangFiles.put(plugin,langFiles);
-        Bukkit.getConsoleSender().sendMessage(text("Registered plugin " + plugin.getName() + " to the language system"));
+        Bukkit.getConsoleSender().sendMessage(text("Registered plugin " + plugin.getName() + " to the language system", NamedTextColor.GREEN));
     }
 
     public static String getPlayerLang(UUID playerUUID) {
