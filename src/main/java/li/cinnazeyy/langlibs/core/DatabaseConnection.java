@@ -3,7 +3,6 @@ package li.cinnazeyy.langlibs.core;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import li.cinnazeyy.langlibs.LangLibs;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.sql.Connection;
@@ -11,7 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
+
+import static net.kyori.adventure.text.Component.text;
 
 public class DatabaseConnection {
     private final static HikariConfig config = new HikariConfig();
@@ -48,7 +48,7 @@ public class DatabaseConnection {
             try {
                 return dataSource.getConnection();
             } catch (SQLException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, "Database connection failed!\n\n" + ex.getMessage());
+                LangLibs.getPlugin().getComponentLogger().error(text("Database connection failed!\n\n" + ex.getMessage()));
             }
             retries--;
         }
@@ -72,7 +72,7 @@ public class DatabaseConnection {
         connectionClosed++;
 
         if(connectionOpened > connectionClosed + 5)
-            Bukkit.getLogger().log(Level.SEVERE, "There are multiple database connections opened. Please report this issue.");
+            LangLibs.getPlugin().getComponentLogger().error(text("There are multiple database connections opened. Please report this issue."));
     }
 
     static void createTables() {
@@ -81,7 +81,7 @@ public class DatabaseConnection {
                 Objects.requireNonNull(con).prepareStatement(table).executeUpdate();
             }
         } catch (SQLException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "An error occurred while creating database table!", ex);
+            LangLibs.getPlugin().getComponentLogger().error("An error occurred while creating database table!", ex);
         }
     }
 

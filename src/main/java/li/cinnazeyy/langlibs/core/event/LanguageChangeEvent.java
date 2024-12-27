@@ -4,6 +4,7 @@ import li.cinnazeyy.langlibs.core.Language;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 public class LanguageChangeEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
@@ -21,7 +22,7 @@ public class LanguageChangeEvent extends Event {
     public static HandlerList getHandlerList() { return HANDLERS; }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 }

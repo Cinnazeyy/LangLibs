@@ -1,6 +1,6 @@
 package li.cinnazeyy.langlibs.core.file;
 
-import li.cinnazeyy.langlibs.core.file.YamlFile;
+import li.cinnazeyy.langlibs.LangLibs;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
@@ -16,7 +16,8 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
+
+import static net.kyori.adventure.text.Component.text;
 
 public abstract class YamlFileFactory {
     protected static Plugin yamlPlugin;
@@ -42,7 +43,7 @@ public abstract class YamlFileFactory {
                 configWriter.write(configuration);
                 configWriter.flush();
             } catch (IOException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, "An error occurred while saving yaml file", ex);
+                LangLibs.getPlugin().getComponentLogger().error(text("An error occurred while saving yaml file"), ex);
             }
         });
         return true;
@@ -53,7 +54,7 @@ public abstract class YamlFileFactory {
             if (!this.scanFile(yamlFile)) throw new IOException();
             yamlFile.load(fileReader);
         } catch (IOException | InvalidConfigurationException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "An error occurred while reloading yaml file", ex);
+            LangLibs.getPlugin().getComponentLogger().error(text("An error occurred while reloading yaml file"), ex);
             return false;
         }
         return true;
@@ -91,7 +92,7 @@ public abstract class YamlFileFactory {
             }
             return true;
         } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "An error occurred while scanning yaml file", ex);
+            LangLibs.getPlugin().getComponentLogger().error(text("An error occurred while scanning yaml file"), ex);
         }
         return false;
     }
@@ -112,7 +113,7 @@ public abstract class YamlFileFactory {
                 return true;
             }
         } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "An error occurred while creating yaml file", ex);
+            LangLibs.getPlugin().getComponentLogger().error(text("An error occurred while creating yaml file"), ex);
         }
         return false;
     }
@@ -127,7 +128,7 @@ public abstract class YamlFileFactory {
         try {
             FileUtils.copyFile(yamlFile.getFile(), Paths.get(yamlFile.getFile().getParentFile().getAbsolutePath(), "old_" + yamlFile.getFileName()).toFile());
         } catch (IOException ignored) {
-            Bukkit.getLogger().log(Level.SEVERE, "Could not create backup of current config file!");
+            LangLibs.getPlugin().getComponentLogger().error(text("Could not create backup of current config file!"));
         }
 
         // Update file
@@ -149,7 +150,7 @@ public abstract class YamlFileFactory {
             Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Updated " + yamlFile.getFileName() + " to version " + yamlFile.getVersion() + ".");
             return true;
         } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "An error occurred while updating config file", ex);
+            LangLibs.getPlugin().getComponentLogger().error(text("An error occurred while updating config file"), ex);
         }
         return false;
     }
@@ -221,7 +222,7 @@ public abstract class YamlFileFactory {
 
             return new InputStreamReader(new ByteArrayInputStream(configContent.getBytes()), StandardCharsets.UTF_8);
         } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "An error occurred while parsing config file", ex);
+            LangLibs.getPlugin().getComponentLogger().error(text("An error occurred while parsing config file"), ex);
             return new InputStreamReader(IOUtils.toInputStream("", StandardCharsets.UTF_8));
         }
     }

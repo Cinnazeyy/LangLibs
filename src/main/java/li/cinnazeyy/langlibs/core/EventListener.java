@@ -12,7 +12,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
+
+import static net.kyori.adventure.text.Component.text;
 
 public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
@@ -25,7 +26,7 @@ public class EventListener implements Listener {
                 else LangLibAPI.setPlayerLang(player,rsUser.getString(2));
                 DatabaseConnection.closeResultSet(rsUser);
             } catch (SQLException e) {
-                Bukkit.getLogger().log(Level.SEVERE, "A SQL error occurred!", e);
+                LangLibs.getPlugin().getComponentLogger().error(text("A SQL error occurred!"), e);
             }
         });
     }
