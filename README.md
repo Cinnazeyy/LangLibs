@@ -9,6 +9,7 @@ A Minecraft Paper language library to implement and sync localisations between p
 
 ## About the Project
 Lang Libs aims to make adding support for multiple languages to your plugins as easy and as seamless as possible, by having one central language library that all other plugins can depend on.
+Lang Libs therefore does need to also be run as a plugin.
 
 ## Installation
 
