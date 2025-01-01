@@ -10,7 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
+import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
+import static net.kyori.adventure.text.format.NamedTextColor.*;
 
 public final class LangLibs extends JavaPlugin {
     private static final String VERSION = "1.4.2";
@@ -39,9 +41,26 @@ public final class LangLibs extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 
         // Plugin startup logic
-        Bukkit.getConsoleSender().sendMessage(text("[", NamedTextColor.DARK_GRAY)
-                .append(text("LangLibs", NamedTextColor.AQUA))
-                .append(text("v" + VERSION,NamedTextColor.GOLD))
+
+        Bukkit.getConsoleSender().sendMessage(empty());
+        Bukkit.getConsoleSender().sendMessage(text(" ▄▄▄    ▄▀", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("█   █  ▀█▀▀▀▀▄▄", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("█▀▀▀█    ▀     ▀▀▄", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("█   █  ▄▄█▀▀▀▄▄   ▀▄", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("▄    ▄█▀  ▄▄▄███▄  ▀▄", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("█   ▄█▀ ▄▄ ██▀▀██▄  ▀▄", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("█   █▄  ▀▀█▀  █▀██   █", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("▀▄  ▀█   ▄▄██▄ ▀▄▀   █", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text(" ▀▄  ▀█ ▄█████ ▄▀    ▀", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("  ▀▄   ▀▀████▀▀  ▄▄█▄▄▄", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("    ▀▄▄     ▄     ▄█▄▄▄", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("       ▀▀▄▄▄▄█▄  █ █▄▀ █", AQUA));
+        Bukkit.getConsoleSender().sendMessage(text("            ▄▀   ▀▀▀  ▀", AQUA));
+        Bukkit.getConsoleSender().sendMessage(empty());
+
+        Bukkit.getConsoleSender().sendMessage(text("[", DARK_GRAY)
+                .append(text("LangLibs", AQUA))
+                .append(text(" v" + VERSION, GOLD))
                 .append(text("] Loaded successfully!")));
     }
 
