@@ -133,14 +133,14 @@ Next, you need to load the language files in your onEnable like so
 
 ```java
 // Load language files
-try{
-        LangUtil.init();
-        Bukkit.getConsoleSender().sendMessage(Component.text("Successfully loaded language files.",NamedTextColor.GREEN));
-        }catch(Exception ex){
-        Bukkit.getLogger().log(Level.SEVERE,ex.getMessage(),ex);
-        getServer().getPluginManager().disablePlugin(this);
-        return;
-        }
+try {
+    LangUtil.init();
+    Bukkit.getConsoleSender().sendMessage(Component.text("Successfully loaded language files.",NamedTextColor.GREEN));
+} catch(Exception ex) {
+    Bukkit.getLogger().log(Level.SEVERE,ex.getMessage(),ex);
+    getServer().getPluginManager().disablePlugin(this);
+    return;
+}
 ```
 
 And now you are completely set up!

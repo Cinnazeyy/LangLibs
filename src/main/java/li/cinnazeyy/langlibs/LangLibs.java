@@ -18,12 +18,13 @@ public final class LangLibs extends JavaPlugin {
     private static final String VERSION = "1.4.2";
     private static LangLibs plugin;
     private YamlConfiguration config;
+    private YamlConfiguration languageConfig;
     @Override
     public void onEnable() {
         plugin = this;
 
         // Create configs
-        createConfig();
+        createConfigs();
 
         // Initialize database connection
         try {
@@ -70,15 +71,27 @@ public final class LangLibs extends JavaPlugin {
         return config;
     }
 
-    private void createConfig() {
+    public @NotNull YamlConfiguration getLanguageConfig() { return languageConfig; }
+
+    private void createConfigs() {
         File createConfig = new File(getDataFolder(), "config.yml");
+        File createLangConfig = new File(getDataFolder(), "languages.yml");
+
         if (!createConfig.exists()) {
             createConfig.getParentFile().mkdirs();
             saveResource("config.yml", false);
         }
+        if (!createLangConfig.exists()) {
+            createLangConfig.getParentFile().mkdirs();
+            saveResource("languages.yml", false);
+        }
+
         config = new YamlConfiguration();
+        languageConfig = new YamlConfiguration();
+
         try {
             config.load(createConfig);
+            languageConfig.load(createLangConfig);
         } catch (Exception e) {
             LangLibs.getPlugin().getComponentLogger().error(text("An error occurred!"), e);
         }
