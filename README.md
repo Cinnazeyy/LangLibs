@@ -52,9 +52,9 @@ like so
 ```java
 @Override
 public void onEnable(){
-        // Plugin startup logic
-        YamlFileFactory.registerPlugin(this);
-        }
+    // Plugin startup logic
+    li.cinnazeyy.langlibs.core.file.YamlFileFactory.registerPlugin(this);
+}
 ```
 
 Make sure this is the YamlFileFactory class from LangLibs!

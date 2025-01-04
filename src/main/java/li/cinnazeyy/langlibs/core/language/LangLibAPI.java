@@ -23,6 +23,7 @@ public class LangLibAPI {
     private static final HashMap<Plugin, LanguageFile[]> pluginLangFiles = new HashMap<>();
     private static final HashMap<UUID, String> playerLocale = new HashMap<>();
 
+    @SuppressWarnings("unused")
     public static void register(Plugin plugin, LanguageFile[] langFiles) {
         pluginLangFiles.put(plugin,langFiles);
         Bukkit.getConsoleSender().sendMessage(text("Registered plugin " + plugin.getName() + " to the language system", NamedTextColor.GREEN));

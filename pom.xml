@@ -61,6 +61,14 @@
             <version>2.14.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- AlpsLib IO -->
+        <dependency>
+            <groupId>com.alpsbte.alpslib</groupId>
+            <artifactId>alpslib-io</artifactId>
+            <version>1.0.38</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <!-- Plugin Build Settings -->

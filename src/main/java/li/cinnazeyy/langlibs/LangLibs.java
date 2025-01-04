@@ -1,14 +1,13 @@
 package li.cinnazeyy.langlibs;
 
+import com.alpsbte.alpslib.io.config.ConfigNotImplementedException;
 import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.EventListener;
-import net.kyori.adventure.text.format.NamedTextColor;
+import li.cinnazeyy.langlibs.core.file.ConfigUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
@@ -17,14 +16,20 @@ import static net.kyori.adventure.text.format.NamedTextColor.*;
 public final class LangLibs extends JavaPlugin {
     private static final String VERSION = "1.4.2";
     private static LangLibs plugin;
-    private YamlConfiguration config;
-    private YamlConfiguration languageConfig;
     @Override
     public void onEnable() {
         plugin = this;
 
-        // Create configs
-        createConfigs();
+        // Initialize configs
+        try {
+            ConfigUtil.init();
+        } catch (ConfigNotImplementedException e) {
+            this.getComponentLogger().warn(text("Could not load configuration file."));
+            Bukkit.getConsoleSender().sendMessage(text("The config file must be configured!", YELLOW));
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        reloadConfig();
 
         // Initialize database connection
         try {
@@ -41,8 +46,7 @@ public final class LangLibs extends JavaPlugin {
         // Register Events
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 
-        // Plugin startup logic
-
+        // Startup graphic
         Bukkit.getConsoleSender().sendMessage(empty());
         Bukkit.getConsoleSender().sendMessage(text(" ▄▄▄    ▄▀", AQUA));
         Bukkit.getConsoleSender().sendMessage(text("█   █  ▀█▀▀▀▀▄▄", AQUA));
@@ -65,35 +69,19 @@ public final class LangLibs extends JavaPlugin {
                 .append(text("] Loaded successfully!")));
     }
 
+    @Override
+    public void reloadConfig() {
+        ConfigUtil.getInstance().reloadFiles();
+        ConfigUtil.getInstance().saveFiles();
+    }
+
     public static LangLibs getPlugin() { return plugin; }
 
     public @NotNull YamlConfiguration getConfig() {
-        return config;
+        return ConfigUtil.getInstance().configs[0];
     }
 
-    public @NotNull YamlConfiguration getLanguageConfig() { return languageConfig; }
-
-    private void createConfigs() {
-        File createConfig = new File(getDataFolder(), "config.yml");
-        File createLangConfig = new File(getDataFolder(), "languages.yml");
-
-        if (!createConfig.exists()) {
-            createConfig.getParentFile().mkdirs();
-            saveResource("config.yml", false);
-        }
-        if (!createLangConfig.exists()) {
-            createLangConfig.getParentFile().mkdirs();
-            saveResource("languages.yml", false);
-        }
-
-        config = new YamlConfiguration();
-        languageConfig = new YamlConfiguration();
-
-        try {
-            config.load(createConfig);
-            languageConfig.load(createLangConfig);
-        } catch (Exception e) {
-            LangLibs.getPlugin().getComponentLogger().error(text("An error occurred!"), e);
-        }
+    public @NotNull YamlConfiguration getLanguageConfig() {
+        return ConfigUtil.getInstance().configs[1];
     }
 }

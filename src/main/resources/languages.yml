@@ -63,3 +63,6 @@ custom_5:
   region: ""
   headId: ""
   itemModel: ""
+
+# NOTE: Do not change
+config-version: 1.0
