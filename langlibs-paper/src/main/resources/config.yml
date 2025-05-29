@@ -1,0 +1,8 @@
+database:
+  url: ""
+  name: ""
+  username: ""
+  password: ""
+
+# NOTE: Do not change
+config-version: 1.0
