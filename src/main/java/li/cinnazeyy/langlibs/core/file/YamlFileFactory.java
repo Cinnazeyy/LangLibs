@@ -21,11 +21,12 @@ import static net.kyori.adventure.text.Component.text;
 
 public abstract class YamlFileFactory {
     protected static Plugin yamlPlugin;
+    private final YamlFile[] yamlFiles;
+
+    @SuppressWarnings("unused")
     public static void registerPlugin(Plugin plugin) {
         yamlPlugin = plugin;
     }
-
-    private final YamlFile[] yamlFiles;
 
     protected YamlFileFactory(@NotNull YamlFile[] yamlFiles) {
         this.yamlFiles = yamlFiles;
@@ -35,6 +36,7 @@ public abstract class YamlFileFactory {
      * Saves YAML files
      * @return true if file saved successfully
      */
+    @SuppressWarnings("unused")
     public boolean saveFiles() {
         Arrays.stream(yamlFiles).forEach(yamlFile -> {
             try (BufferedWriter configWriter = new BufferedWriter(new FileWriter(yamlFile.getFile()))){
@@ -62,11 +64,9 @@ public abstract class YamlFileFactory {
 
     /**
      * Reloads YAML files
-     * @return true if file reloaded successfully
      */
-    public boolean reloadFiles() {
+    public void reloadFiles() {
         Arrays.stream(yamlFiles).forEach(this::reloadFile);
-        return true;
     }
 
     /**
