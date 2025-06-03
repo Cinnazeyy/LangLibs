@@ -43,6 +43,11 @@ he_IL:
   region: "ישראל"
   headId: "13994"
   itemModel: "item_flag_IL"
+custom_1:
+  name: ""
+  region: ""
+  headId: ""
+  itemModel: ""
 custom_2:
   name: ""
   region: ""
