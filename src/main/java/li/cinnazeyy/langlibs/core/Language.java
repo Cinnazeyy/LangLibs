@@ -13,6 +13,7 @@ public enum Language {
     ru_RU,
     zh_CN,
     zh_TW,
+    he_IL,
     custom_1,
     custom_2,
     custom_3,

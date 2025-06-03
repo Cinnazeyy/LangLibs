@@ -38,6 +38,11 @@ zh_TW:
   region: "台灣"
   headId: "11627"
   itemModel: "item_flag_tw"
+he_IL:
+  name: "עברית"
+  region: "ישראל"
+  headId: "13994"
+  itemModel: "item_flag_IL"
 custom_1:
   name: ""
   region: ""
@@ -65,4 +70,4 @@ custom_5:
   itemModel: ""
 
 # NOTE: Do not change
-config-version: 1.0
+config-version: 1.1
