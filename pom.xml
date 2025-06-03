@@ -76,7 +76,7 @@
         <resources>
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
-                <filtering>false</filtering>
+                <filtering>true</filtering> <!-- Needed so it will replace the placeholders in plugin.yml -->
             </resource>
         </resources>
         <!-- IMPORTANT: Plugin Building Path -->
