@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="LangLibs-API" />
-        <module name="LangLibs (1)" />
+        <module name="LangLibs-Paper" />
       </profile>
     </annotationProcessing>
   </component>
