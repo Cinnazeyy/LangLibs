@@ -5,14 +5,14 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
+@SuppressWarnings("unused")
 @ConfigSerializable
 public class MainConfig {
     @Setting("database")
     private DatabaseCredentials credentials;
 
-    @Setting("config-version")
     @Comment("NOTE: Do not change!")
-    private String configVersion;
+    private int version;
 
     public DatabaseCredentials getCredentials() {
         return credentials;

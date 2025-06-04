@@ -1,6 +1,10 @@
 package li.cinnazeyy.langlibs.core;
 
 import li.cinnazeyy.langlibs.core.config.ConfigUtil;
+import li.cinnazeyy.langlibs.core.config.LanguageConfig;
+import li.cinnazeyy.langlibs.core.config.LanguageSection;
+
+import java.lang.reflect.InvocationTargetException;
 
 @SuppressWarnings("unused")
 public enum Language {
@@ -21,10 +25,26 @@ public enum Language {
     private final String name, region, headId, itemModel;
 
     Language() {
-        this.name = ConfigUtil.getLanguageConfig().node(this.name(), "name").getString();
-        this.region = ConfigUtil.getLanguageConfig().node(this.name(), "region").getString();
-        this.headId = ConfigUtil.getLanguageConfig().node(this.name(), "headId").getString();
-        this.itemModel = ConfigUtil.getLanguageConfig().node(this.name(), "modelId").getString();
+        LanguageConfig config = ConfigUtil.getLanguageConfig();
+        String name, region, headId, itemModel;
+
+        try {
+            LanguageSection section = (LanguageSection) config.getClass().getMethod(this.name()).invoke(config);
+            name = section.name();
+            region = section.region();
+            headId = section.headId();
+            itemModel = section.itemModel();
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            name = "undefined";
+            region = "undefined";
+            headId = "undefined";
+            itemModel = "undefined";
+        }
+
+        this.name = name;
+        this.region = region;
+        this.headId = headId;
+        this.itemModel = itemModel;
     }
 
     public String getRegion() {

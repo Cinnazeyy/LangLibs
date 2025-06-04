@@ -8,6 +8,7 @@ import java.nio.file.Path;
 
 public class ConfigUtil {
     private static MainConfig mainConfig = null;
+    private static LanguageConfig languageConfig = null;
 
     private static CommentedConfigurationNode configRoot = null;
     private static CommentedConfigurationNode languageRoot = null;
@@ -27,6 +28,7 @@ public class ConfigUtil {
             mainConfig = configRoot.get(MainConfig.class);
 
             languageRoot = languageLoader.load();
+            languageConfig = languageRoot.get(LanguageConfig.class);
         } catch (ConfigurateException e) {
             throw new RuntimeException(e);
         }
@@ -37,7 +39,7 @@ public class ConfigUtil {
         return mainConfig;
     }
 
-    public static CommentedConfigurationNode getLanguageConfig() {
-        return languageRoot;
+    public static LanguageConfig getLanguageConfig() {
+        return languageConfig;
     }
 }

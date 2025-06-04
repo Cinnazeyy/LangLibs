@@ -1,4 +1,4 @@
-package li.cinnazeyy.langlibs.core.language;
+package li.cinnazeyy.langlibs.core;
 
 import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
