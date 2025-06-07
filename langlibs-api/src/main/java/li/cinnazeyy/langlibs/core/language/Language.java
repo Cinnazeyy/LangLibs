@@ -1,4 +1,4 @@
-package li.cinnazeyy.langlibs.core;
+package li.cinnazeyy.langlibs.core.language;
 
 import li.cinnazeyy.langlibs.core.config.ConfigUtil;
 import li.cinnazeyy.langlibs.core.config.LanguageConfig;

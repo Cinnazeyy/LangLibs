@@ -1,6 +1,6 @@
 package li.cinnazeyy.langlibs.core.file;
 
-import li.cinnazeyy.langlibs.core.Language;
+import li.cinnazeyy.langlibs.core.language.Language;
 import org.bukkit.plugin.Plugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +55,8 @@ public class LanguageFile {
     public Language getLanguage() {return language;}
 
     public double getVersion() {return version;}
+
+    public double getConfiguredVersion() {return root.node("config-version").getDouble();}
 
     public String getFileName() {return filePath.toFile().getName();}
 

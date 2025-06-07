@@ -1,6 +1,6 @@
 package li.cinnazeyy.langlibs.core.event;
 
-import li.cinnazeyy.langlibs.core.Language;
+import li.cinnazeyy.langlibs.core.language.Language;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
