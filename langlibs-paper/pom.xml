@@ -16,12 +16,6 @@
     <description>A universal language library for localisation</description>
 
     <repositories>
-        <!-- Alps Repo -->
-        <repository>
-            <id>alpsbte-repo</id>
-            <url>https://mvn.alps-bte.com/repository/alps-bte/</url>
-        </repository>
-
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
@@ -47,6 +41,13 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>alpsbte-repo</id>
+            <url>https://mvn.alps-bte.com/repository/alps-bte/</url>
+        </repository>
+    </distributionManagement>
 
     <!-- Plugin Build Settings -->
     <build>
