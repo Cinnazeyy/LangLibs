@@ -1,13 +1,11 @@
 package li.cinnazeyy.langlibs;
 
-import com.alpsbte.alpslib.io.config.ConfigNotImplementedException;
-import li.cinnazeyy.langlibs.core.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.EventListener;
-import li.cinnazeyy.langlibs.core.file.ConfigUtil;
+import li.cinnazeyy.langlibs.core.config.ConfigUtil;
+import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
+import org.spongepowered.configurate.ConfigurateException;
 
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
@@ -23,9 +21,9 @@ public final class LangLibs extends JavaPlugin {
         // Initialize configs
         try {
             ConfigUtil.init();
-        } catch (ConfigNotImplementedException e) {
-            this.getComponentLogger().warn(text("Could not load configuration file."));
-            Bukkit.getConsoleSender().sendMessage(text("The config file must be configured!", YELLOW));
+        } catch (ConfigurateException e) {
+            this.getComponentLogger().warn(text("Could not load configuration files!"));
+            Bukkit.getConsoleSender().sendMessage(text("The config files must be configured!", YELLOW));
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -33,12 +31,11 @@ public final class LangLibs extends JavaPlugin {
 
         // Initialize database connection
         try {
-            DatabaseConnection.InitializeDatabase();
+            DatabaseConnection.InitializeDatabase(ConfigUtil.getConfig().getCredentials());
             Bukkit.getConsoleSender().sendMessage("Successfully initialized database connection.");
         } catch (Exception ex) {
-            Bukkit.getConsoleSender().sendMessage("Could not initialize database connection.");
+            Bukkit.getConsoleSender().sendMessage("Could not initialize database connection!");
             LangLibs.getPlugin().getComponentLogger().error(text(ex.getMessage()), ex);
-
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -71,17 +68,14 @@ public final class LangLibs extends JavaPlugin {
 
     @Override
     public void reloadConfig() {
-        ConfigUtil.getInstance().reloadFiles();
-        ConfigUtil.getInstance().saveFiles();
+        try {
+            ConfigUtil.reloadAllConfigs();
+        } catch (ConfigurateException e) {
+            this.getComponentLogger().warn(text("Could not load configuration files!"));
+            Bukkit.getConsoleSender().sendMessage(text("The config files must be configured!", YELLOW));
+            this.getServer().getPluginManager().disablePlugin(this);
+        }
     }
 
     public static LangLibs getPlugin() { return plugin; }
-
-    public @NotNull YamlConfiguration getConfig() {
-        return ConfigUtil.getInstance().configs[0];
-    }
-
-    public @NotNull YamlConfiguration getLanguageConfig() {
-        return ConfigUtil.getInstance().configs[1];
-    }
 }

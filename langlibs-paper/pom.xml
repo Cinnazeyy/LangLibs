@@ -7,7 +7,7 @@
     <parent>
         <groupId>li.cinnazeyy</groupId>
         <artifactId>LangLibs</artifactId>
-        <version>1.4.2</version>
+        <version>1.5</version>
     </parent>
 
     <name>LangLibs-Paper</name>
@@ -40,35 +40,10 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- MariaDB Connector -->
         <dependency>
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-            <version>2.7.4</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Hikari-CP (MariaDB) -->
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>4.0.3</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Apache Commons IO -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.14.0</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- AlpsLib IO -->
-        <dependency>
-            <groupId>com.alpsbte.alpslib</groupId>
-            <artifactId>alpslib-io</artifactId>
-            <version>1.0.38</version>
+            <groupId>li.cinnazeyy</groupId>
+            <artifactId>LangLibs-API</artifactId>
+            <version>1.5</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

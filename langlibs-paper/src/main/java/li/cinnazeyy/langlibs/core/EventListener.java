@@ -1,7 +1,7 @@
 package li.cinnazeyy.langlibs.core;
 
 import li.cinnazeyy.langlibs.LangLibs;
-import li.cinnazeyy.langlibs.core.language.LangLibAPI;
+import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
