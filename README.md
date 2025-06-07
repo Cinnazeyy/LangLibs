@@ -10,7 +10,7 @@ A Minecraft Paper language library to implement and sync localisations between p
 ## About the Project
 Lang Libs aims to make adding support for multiple languages to your plugins as easy and as seamless as possible, by having one central language library that all other plugins can depend on.
 
-Lang Libs therefore does need to also be run as a plugin.
+Lang Libs therefore needs to also be run as a standalone plugin as well.
 
 Player language is saved in a SQL database.
 
@@ -19,7 +19,7 @@ Player language is saved in a SQL database.
 1. Download latest build or build Lang Libs yourself and put it in your plugins folder.
 2. Set database credentials in the plugin's config.yml
 
-## Implementing Lang Libs in your Plugin
+## Implementing Lang Libs in your own Plugin
 
 ### 1. Maven
 
@@ -44,25 +44,10 @@ Player language is saved in a SQL database.
 </dependency>
 ```
 
-### 2. Register Plugin
-
-In your main plugin class you need to first register the yaml file factory of the lang libs dependency in your onEnable
-like so
-
-```java
-@Override
-public void onEnable(){
-    // Plugin startup logic
-    li.cinnazeyy.langlibs.core.file.YamlFileFactory.registerPlugin(this);
-}
-```
-
-Make sure this is the YamlFileFactory class from LangLibs!
-
-### 3. Create LangUtil
+### 2. Create LangUtil Class
 
 Next create a new class called LangUtil which extends LanguageUtil like so, and create a new LanguageFile for each
-language that you want to support for this plugin.
+language that you want to support for your plugin.
 
 ```java
 public class LangUtil extends LanguageUtil {
@@ -70,9 +55,10 @@ public class LangUtil extends LanguageUtil {
 
     public static void init() {
         if (langUtilInstance != null) return;
-        LangLibAPI.register(ExamplePlugin.getPlugin(), new LanguageFile[]{
-                new LanguageFile(Language.en_GB, 1.0),
-                new LanguageFile(Language.de_DE, 1.0, "de_AT", "de_CH"),
+        Plugin plugin = ExamplePlugin.getPlugin();
+        LangLibAPI.register(plugin, new LanguageFile[]{
+                new LanguageFile(plugin, 1.0, Language.en_GB),
+                new LanguageFile(plugin, 1.0, Language.de_DE, "de_AT", "de_CH")
         });
         langUtilInstance = new LangUtil();
     }
@@ -95,7 +81,7 @@ public class LangUtil extends LanguageUtil {
 you can also specify alternative language codes that should also point to the same languageFile like with "de_AT" and "
 de_CH" in this example.
 
-### 4. Create Language Files
+### 3. Create Language Files
 
 Next you need to actually create those language files.
 
@@ -125,9 +111,9 @@ This version needs to be updated whenever you update the structure of this file.
 This is so that the plugin will automatically add missing translations when updating your plugin and you do not need to
 manually update every language file everytime.
 
-When updating this version do not forget to also update the version Langutil class!
+When updating this version do not forget to also update the version in the Langutil class!
 
-### 5. Load Language Files
+### 4. Load Language Files
 
 Next, you need to load the language files in your onEnable like so
 
