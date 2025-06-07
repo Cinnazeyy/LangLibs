@@ -122,4 +122,9 @@ public class LanguageUtil extends LanguageFileFactory {
     public String getLocaleTagByPlayer(Player player) {
         return player != null ? player.getClientOption(ClientOption.LOCALE) : null;
     }
+
+    public void setDynamicKey(String key, Object value) {
+        Arrays.stream(languageFiles).forEach(languageFile -> languageFile.setTranslation(key, value));
+        reloadFiles();
+    }
 }

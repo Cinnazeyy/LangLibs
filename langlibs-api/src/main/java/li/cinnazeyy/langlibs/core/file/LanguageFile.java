@@ -94,6 +94,15 @@ public class LanguageFile {
         return plugin.getResource("lang/" + filePath.toFile().getName());
     }
 
+    public void setTranslation(String key, Object value) {
+        try {
+            root.node(key).set(value);
+            saveFile();
+        } catch (ConfigurateException e) {
+            LOGGER.error("Could not set key {} in language file {} with value {}!", key, filePath.toString(), value);
+        }
+    }
+
     public List<String> readDefaultFile() {
         try (InputStream in = getDefaultFileStream()) {
             BufferedReader input = new BufferedReader(new InputStreamReader(in));
