@@ -7,8 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.ConfigurateException;
 
-import java.io.File;
-
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.format.NamedTextColor.*;
@@ -71,11 +69,7 @@ public final class LangLibs extends JavaPlugin {
     }
 
     public void createConfig(String configFileName) {
-        File createConfig = new File(getDataFolder(), configFileName);
-        if (!createConfig.exists()) {
-            createConfig.getParentFile().mkdirs();
-            saveResource("config.yml", false);
-        }
+        saveResource(configFileName, false);
     }
 
     @Override
