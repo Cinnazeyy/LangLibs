@@ -20,14 +20,13 @@ public final class LangLibs extends JavaPlugin {
 
         // Initialize configs
         try {
-            ConfigUtil.init();
+            ConfigUtil.init(this);
         } catch (ConfigurateException e) {
             this.getComponentLogger().warn(text("Could not load configuration files!"));
             Bukkit.getConsoleSender().sendMessage(text("The config files must be configured!", YELLOW));
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        reloadConfig();
 
         // Initialize database connection
         try {

@@ -62,7 +62,7 @@ public class DatabaseConnection {
     }
 
     public static void closeResultSet(ResultSet resultSet) throws SQLException {
-        if(resultSet.isClosed()
+        if (resultSet.isClosed()
                 && resultSet.getStatement().isClosed()
                 && resultSet.getStatement().getConnection().isClosed())
             return;
@@ -73,7 +73,7 @@ public class DatabaseConnection {
 
         connectionClosed++;
 
-        if(connectionOpened > connectionClosed + 5)
+        if (connectionOpened > connectionClosed + 5)
             logger.error("There are multiple database connections opened. Please report this issue.");
     }
 

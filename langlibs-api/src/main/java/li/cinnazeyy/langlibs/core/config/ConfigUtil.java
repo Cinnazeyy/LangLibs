@@ -1,10 +1,9 @@
 package li.cinnazeyy.langlibs.core.config;
 
+import org.bukkit.plugin.Plugin;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
-
-import java.nio.file.Path;
 
 public class ConfigUtil {
     private static MainConfig mainConfig = null;
@@ -17,12 +16,12 @@ public class ConfigUtil {
     private static YamlConfigurationLoader languageLoader = null;
 
     @SuppressWarnings("unused")
-    public static void init() throws ConfigurateException {
+    public static void init(Plugin plugin) throws ConfigurateException {
         configLoader = YamlConfigurationLoader.builder()
-                .path(Path.of("config.yml"))
+                .path(plugin.getDataPath().resolve("config.yml"))
                 .build();
         languageLoader = YamlConfigurationLoader.builder()
-                .path(Path.of("languages.yml"))
+                .path(plugin.getDataPath().resolve("languages.yml"))
                 .build();
 
         loadConfigFiles();

@@ -11,7 +11,7 @@
 
     <name>LangLibs</name>
 
-    <description>A universal language library for localisation</description>
+    <description>A minecraft language library for localisation</description>
 
     <modules>
         <module>langlibs-api</module>
