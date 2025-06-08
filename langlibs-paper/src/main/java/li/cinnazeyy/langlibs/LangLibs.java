@@ -4,8 +4,14 @@ import li.cinnazeyy.langlibs.core.EventListener;
 import li.cinnazeyy.langlibs.core.config.ConfigUtil;
 import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.ConfigurateException;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.logging.Level;
 
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
@@ -14,11 +20,14 @@ import static net.kyori.adventure.text.format.NamedTextColor.*;
 public final class LangLibs extends JavaPlugin {
     private static final String VERSION = "1.4.2";
     private static LangLibs plugin;
+
     @Override
     public void onEnable() {
         plugin = this;
 
         // Initialize configs
+        createConfig("config.yml");
+        createConfig("languages.yml");
         try {
             ConfigUtil.init(this);
         } catch (ConfigurateException e) {
@@ -65,6 +74,14 @@ public final class LangLibs extends JavaPlugin {
                 .append(text("] Loaded successfully!")));
     }
 
+    public void createConfig(String configFileName) {
+        File createConfig = new File(getDataFolder(), configFileName);
+        if (!createConfig.exists()) {
+            createConfig.getParentFile().mkdirs();
+            saveResource("config.yml", false);
+        }
+    }
+
     @Override
     public void reloadConfig() {
         try {
@@ -76,5 +93,5 @@ public final class LangLibs extends JavaPlugin {
         }
     }
 
-    public static LangLibs getPlugin() { return plugin; }
+    public static LangLibs getPlugin() {return plugin;}
 }
