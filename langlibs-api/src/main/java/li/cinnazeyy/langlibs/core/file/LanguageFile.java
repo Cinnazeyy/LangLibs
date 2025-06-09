@@ -1,9 +1,9 @@
 package li.cinnazeyy.langlibs.core.file;
 
 import li.cinnazeyy.langlibs.core.language.Language;
+import net.kyori.adventure.text.Component;
 import org.bukkit.plugin.Plugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class LanguageFile {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LanguageFile.class);
-
     private final Plugin plugin;
     private final Language language;
     private final Path filePath;
@@ -34,7 +32,7 @@ public class LanguageFile {
     private CommentedConfigurationNode root = null;
 
 
-    public LanguageFile(Plugin plugin, double version, Language lang) {
+    public LanguageFile(@NotNull Plugin plugin, double version, Language lang) {
         this.plugin = plugin;
         this.language = lang;
         this.version = version;
@@ -60,27 +58,27 @@ public class LanguageFile {
 
     public String getFileName() {return filePath.toFile().getName();}
 
-    public String getTranslation(String key) {
+    public String getTranslation(@NotNull String key) {
         String translation = root.node((Object[]) key.split("\\.")).getString();
         return translation != null ? translation : "undefined";
     }
 
-    public String getTranslation(String key, String... args) {
+    public String getTranslation(String key, String @NotNull ... args) {
         String translation = getTranslation(key);
         for (int i = 0; i < args.length; i++) translation = translation.replace("{" + i + "}", args[i]);
         return translation;
     }
 
-    public List<String> getTranslations(String key) {
+    public List<String> getTranslations(@NotNull String key) {
         try {
             return root.node((Object[]) key.split("\\.")).getList(String.class);
         } catch (SerializationException e) {
-            LOGGER.error("Could not parse string list in language file {} with key {}!", filePath.toString(), key);
+            plugin.getComponentLogger().error("Could not parse string list in language file {} with key {}!", filePath.toString(), key);
         }
         return List.of("undefined");
     }
 
-    public List<String> getTranslations(String key, String... args) {
+    public List<String> getTranslations(String key, String @NotNull ... args) {
         String[] translations = getTranslations(key).toArray(new String[0]);
         for (int i = 0; i < args.length; i++) {
             for (int k = 0; k < translations.length; k++) {
@@ -99,14 +97,14 @@ public class LanguageFile {
             root.node(key).set(value);
             saveFile();
         } catch (ConfigurateException e) {
-            LOGGER.error("Could not set key {} in language file {} with value {}!", key, filePath.toString(), value);
+            plugin.getComponentLogger().error("Could not set key {} in language file {} with value {}!", key, filePath.toString(), value);
         }
     }
 
     public List<String> readDefaultFile() {
         try (InputStream in = getDefaultFileStream()) {
             BufferedReader input = new BufferedReader(new InputStreamReader(in));
-            List<String> lines = input.lines().collect(Collectors.toList());
+            List<String> lines = input.lines().collect(Collectors.toList()); // NOSONAR Need to be a modifiable list
             input.close();
             return lines;
         } catch (Exception e) {
@@ -124,7 +122,7 @@ public class LanguageFile {
         try {
             root = languageLoader.load();
         } catch (ConfigurateException e) {
-            LOGGER.error("Could not properly load language file {}", filePath);
+            plugin.getComponentLogger().error(Component.text("Could not properly load language file" + filePath), e);
         }
     }
 }

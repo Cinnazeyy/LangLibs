@@ -25,7 +25,7 @@ public final class LangLibs extends JavaPlugin {
         try {
             ConfigUtil.init(this);
         } catch (ConfigurateException e) {
-            this.getComponentLogger().warn(text("Could not load configuration files!"));
+            this.getComponentLogger().warn(text("Could not load configuration files!"), e);
             Bukkit.getConsoleSender().sendMessage(text("The config files must be configured!", YELLOW));
             this.getServer().getPluginManager().disablePlugin(this);
             return;
