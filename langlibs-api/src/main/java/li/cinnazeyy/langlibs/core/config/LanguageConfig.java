@@ -14,6 +14,7 @@ public record LanguageConfig(
         LanguageSection ru_RU,
         LanguageSection zh_CN,
         LanguageSection zh_TW,
+        LanguageSection he_IL,
         LanguageSection custom_1,
         LanguageSection custom_2,
         LanguageSection custom_3,
