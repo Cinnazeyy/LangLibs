@@ -7,5 +7,5 @@ public record DatabaseCredentials(
         String url,
         String name,
         String username,
-        String password) {
-}
+        String password
+) {}

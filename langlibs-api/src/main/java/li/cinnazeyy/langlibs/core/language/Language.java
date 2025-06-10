@@ -38,8 +38,8 @@ public enum Language {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             name = "undefined";
             region = "undefined";
-            headId = "undefined";
-            itemModel = "undefined";
+            headId = "36076";
+            itemModel = "";
         }
 
         this.name = name;
