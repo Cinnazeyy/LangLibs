@@ -1,0 +1,6 @@
+name: LangLibs
+version: '1.5'
+main: li.cinnazeyy.langlibs.LangLibs
+api-version: '1.21'
+authors: [Cinnazeyy, R3tuxn]
+description: A universal language library for localisation
