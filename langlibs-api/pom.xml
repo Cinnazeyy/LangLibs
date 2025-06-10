@@ -87,7 +87,7 @@
     <distributionManagement>
         <repository>
             <id>alpsbte-repo</id>
-            <url>https://mvn.alps-bte.com/repository/alps-bte/</url>
+            <url>https://mvn.alps-bte.com/repository/lang-libs/</url>
         </repository>
     </distributionManagement>
 
