@@ -9,7 +9,10 @@
         <version>1.5</version>
     </parent>
 
-    <artifactId>langui-paper</artifactId>
+    <name>LangUI-Paper</name>
+    <artifactId>LangUI-Paper</artifactId>
+    <packaging>jar</packaging>
+    <description>A user interface plugin for LangLibs</description>
 
     <repositories>
         <repository>
