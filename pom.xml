@@ -16,6 +16,7 @@
     <modules>
         <module>langlibs-api</module>
         <module>langlibs-paper</module>
+        <module>langui-paper</module>
     </modules>
 
     <properties>

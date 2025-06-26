@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="LangLibs-API" />
         <module name="LangLibs-Paper" />
+        <module name="langui-paper" />
       </profile>
     </annotationProcessing>
   </component>

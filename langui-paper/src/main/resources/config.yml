@@ -1,0 +1,9 @@
+info-message-icon: "\uE13B"
+error-message-icon: "\uE13A"
+languageSelection:
+  useHeads: false
+  list:
+    - "en_GB"
+    - "de_DE"
+    - "fr_FR"
+    - "he_IL"

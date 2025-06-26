@@ -1,0 +1,7 @@
+menu:
+  select-language: "Sélectionner la langue"
+  close: "Terminé"
+info:
+  changed-language: "Changement de langue en français!"
+
+config-version: 1.0

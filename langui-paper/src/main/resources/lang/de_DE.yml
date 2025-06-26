@@ -1,0 +1,7 @@
+menu:
+  select-language: "Sprache auswählen"
+  close: "Schliessen"
+info:
+  changed-language: "Sprache auf Deutsch gestellt!"
+
+config-version: 1.0

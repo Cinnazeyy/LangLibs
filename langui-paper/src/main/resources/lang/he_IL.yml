@@ -1,0 +1,7 @@
+menu:
+  select-language: "בחר שפה"
+  close: " סגור"
+info:
+  changed-language: "השפה השתנתה לעברית!"
+
+config-version: 1.0
