@@ -1,11 +1,14 @@
 package li.cinnazeyy.langlibs;
 
 import li.cinnazeyy.langlibs.core.EventListener;
+import li.cinnazeyy.langlibs.core.YamlConfigDataProvider;
 import li.cinnazeyy.langlibs.core.config.ConfigUtil;
 import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.ConfigurateException;
+
+import java.nio.file.Files;
 
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
@@ -14,6 +17,7 @@ import static net.kyori.adventure.text.format.NamedTextColor.*;
 public final class LangLibs extends JavaPlugin {
     private static final String VERSION = "1.5";
     private static LangLibs plugin;
+    private static YamlConfigDataProvider configProvider;
 
     @Override
     public void onEnable() {
@@ -23,7 +27,7 @@ public final class LangLibs extends JavaPlugin {
         createConfig("config.yml");
         createConfig("languages.yml");
         try {
-            ConfigUtil.init(this);
+            configProvider = new YamlConfigDataProvider();
         } catch (ConfigurateException e) {
             this.getComponentLogger().warn(text("Could not load configuration files!"), e);
             Bukkit.getConsoleSender().sendMessage(text("The config files must be configured!", YELLOW));
@@ -69,18 +73,13 @@ public final class LangLibs extends JavaPlugin {
     }
 
     public void createConfig(String configFileName) {
+        if (Files.exists(getDataPath().resolve(configFileName))) return;
         saveResource(configFileName, false);
     }
 
     @Override
     public void reloadConfig() {
-        try {
-            ConfigUtil.reloadAllConfigs();
-        } catch (ConfigurateException e) {
-            this.getComponentLogger().warn(text("Could not load configuration files!"));
-            Bukkit.getConsoleSender().sendMessage(text("The config files must be configured!", YELLOW));
-            this.getServer().getPluginManager().disablePlugin(this);
-        }
+        configProvider.reloadAllConfigs();
     }
 
     public static LangLibs getPlugin() {return plugin;}
