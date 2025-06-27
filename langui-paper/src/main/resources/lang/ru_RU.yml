@@ -1,0 +1,7 @@
+menu:
+  select-language: "Выберите язык"
+  close: "Закрыть"
+info:
+  changed-language: "Смените язык на английский!"
+
+config-version: 1.0
