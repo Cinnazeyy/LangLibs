@@ -6,8 +6,7 @@ import li.cinnazeyy.langlibs.core.LangLibAPI;
 import li.cinnazeyy.langlibs.core.event.LanguageChangeEvent;
 import li.cinnazeyy.langlibs.core.language.Language;
 import li.cinnazeyy.langui.util.LangUtil;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,6 +18,7 @@ import org.ipvp.canvas.Menu;
 import org.ipvp.canvas.mask.BinaryMask;
 import org.ipvp.canvas.mask.Mask;
 import org.ipvp.canvas.type.ChestMenu;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -30,7 +30,7 @@ public class LanguageSelectMenu implements Listener {
     private final Menu menu;
     private final Player menuPlayer;
 
-    public LanguageSelectMenu(Player player) {
+    public LanguageSelectMenu(@NotNull Player player) {
         menuPlayer = player;
         menu = ChestMenu.builder(3)
                 .title(LangUtil.getInstance().getComponent(player.getUniqueId(), "menu.select-language", BLACK))
@@ -61,10 +61,10 @@ public class LanguageSelectMenu implements Listener {
         menu.open(menuPlayer);
     }
 
-    private ItemStack getLanguageItem(Language lang) {
+    private ItemStack getLanguageItem(@NotNull Language lang) {
         boolean useHeads = LangUI.getPlugin().getConfig().getBoolean("languageSelection.useHeads");
 
-        Component itemName = text(lang.getName(), GOLD)
+        TextComponent itemName = text(lang.getName(), GOLD)
                 .decoration(TextDecoration.BOLD, true)
                 .decoration(TextDecoration.ITALIC, false)
                 .append(text(" (", DARK_GRAY))

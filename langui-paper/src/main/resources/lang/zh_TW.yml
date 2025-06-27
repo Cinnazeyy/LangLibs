@@ -1,0 +1,7 @@
+menu:
+  select-language: "選擇語言"
+  close: "關閉"
+info:
+  changed-language: "將語言更改成英文！"
+
+config-version: 1.0

@@ -18,7 +18,6 @@ import static net.kyori.adventure.text.Component.text;
 public final class LangUI extends JavaPlugin {
 
     private static LangUI plugin;
-    private YamlConfiguration config;
 
     public static LangUI getPlugin() {
         return plugin;
@@ -43,7 +42,7 @@ public final class LangUI extends JavaPlugin {
             LangUtil.init();
             getLogger().info("Successfully loaded language files.");
         } catch (Exception ex) {
-            getPlugin().getComponentLogger().error(text(ex.getMessage()), ex);
+            getPlugin().getComponentLogger().error(text("Unable to load language files."), ex);
             getServer().getPluginManager().disablePlugin(this);
         }
     }
@@ -51,11 +50,10 @@ public final class LangUI extends JavaPlugin {
     private void createConfig() {
         File createConfig = new File(getDataFolder(), "config.yml");
         if (!createConfig.exists()) {
-            createConfig.getParentFile().mkdirs();
             saveResource("config.yml", false);
         }
 
-        config = new YamlConfiguration();
+        YamlConfiguration config = new YamlConfiguration();
         try {
             config.load(createConfig);
         } catch (IOException | InvalidConfigurationException e) {
