@@ -38,7 +38,7 @@ Player language is saved in a SQL database.
 <!-- LangLibs -->
 <dependency>
     <groupId>li.cinnazeyy</groupId>
-    <artifactId>LangLibs</artifactId>
+    <artifactId>LangLibs-API</artifactId>
     <version>{latest version}</version>
     <scope>provided</scope>
 </dependency>
