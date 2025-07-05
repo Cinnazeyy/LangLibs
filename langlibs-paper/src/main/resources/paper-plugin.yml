@@ -1,5 +1,5 @@
 name: LangLibs
-version: '1.5'
+version: '1.5.1'
 main: li.cinnazeyy.langlibs.LangLibs
 api-version: '1.21'
 authors: [Cinnazeyy, R3tuxn]

@@ -3,7 +3,7 @@
   <parent>
     <artifactId>LangLibs</artifactId>
     <groupId>li.cinnazeyy</groupId>
-    <version>1.5</version>
+    <version>1.5.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>LangUI-Paper</artifactId>
@@ -20,7 +20,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
+        <version>3.14.0</version>
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
@@ -28,7 +28,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.6.0</version>
         <executions>
           <execution>
             <phase>package</phase>

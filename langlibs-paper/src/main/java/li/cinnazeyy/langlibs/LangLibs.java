@@ -7,12 +7,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.ConfigurateException;
 
+import java.io.File;
+
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.format.NamedTextColor.*;
 
 public final class LangLibs extends JavaPlugin {
-    private static final String VERSION = "1.5";
+    private static final String VERSION = "1.5.1";
     private static LangLibs plugin;
 
     @Override
@@ -69,7 +71,8 @@ public final class LangLibs extends JavaPlugin {
     }
 
     public void createConfig(String configFileName) {
-        saveResource(configFileName, false);
+        File file = getDataPath().resolve(configFileName).toFile();
+        if (!file.exists()) saveResource(configFileName, false);
     }
 
     @Override
