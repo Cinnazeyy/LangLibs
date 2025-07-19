@@ -16,8 +16,8 @@ dependencies {
     compileOnly(libs.commons.io.commons.io)
 }
 
-val alpsMavenUser: String? = project.findProperty("ORG_GRADLE_PROJECT_alpsMavenUser") as String?
-val alpsMavenPassword: String? = project.findProperty("ORG_GRADLE_PROJECT_alpsMavenPassword") as String?
+val alpsMavenUser: String? = project.findProperty("alpsMavenUser") as String?
+val alpsMavenPassword: String? = project.findProperty("alpsMavenPassword") as String?
 
 publishing {
     publications.create<MavenPublication>("maven") {
