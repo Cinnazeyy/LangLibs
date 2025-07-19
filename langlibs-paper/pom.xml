@@ -4,15 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>li.cinnazeyy</groupId>
-        <artifactId>LangLibs</artifactId>
-        <version>1.5.1</version>
-    </parent>
 
+    <groupId>li.cinnazeyy</groupId>
+    <version>1.5.1</version>
     <name>LangLibs-Paper</name>
     <artifactId>LangLibs-Paper</artifactId>
-    <packaging>jar</packaging>
     <description>A universal language library for localisation</description>
 
     <repositories>
@@ -58,16 +54,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.14.0</version>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.6.0</version>
                 <configuration>
                     <outputDirectory>${project.build.directory}/shaded/</outputDirectory>
                     <createDependencyReducedPom>true</createDependencyReducedPom>
@@ -98,6 +94,7 @@
     </build>
 
     <properties>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>

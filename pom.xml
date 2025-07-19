@@ -7,20 +7,12 @@
     <groupId>li.cinnazeyy</groupId>
     <artifactId>LangLibs</artifactId>
     <version>1.5.1</version>
-    <packaging>pom</packaging>
-
-    <name>LangLibs</name>
-
     <description>A minecraft language library for localisation</description>
+    <packaging>pom</packaging>
 
     <modules>
         <module>langlibs-api</module>
         <module>langlibs-paper</module>
         <module>langui-paper</module>
     </modules>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
 </project>
