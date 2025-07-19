@@ -3,14 +3,20 @@ name: Build & Upload LangLibs-Paper
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - 'langlibs-paper/**'
+      - '.github/workflows/build-langlibs-paper.yml'
+      - 'gradle/**'
+      - 'buildSrc/**'
+      - 'langlibs-api/**'
   pull_request:
     branches: [ "master" ]
-  path:
-    - 'langlibs-paper/**'
-    - '.github/workflows/build-langlibs-paper.yml'
-    - 'gradle/**'
-    - 'buildSrc/**'
-    - 'langlibs-api/**'
+    paths:
+      - 'langlibs-paper/**'
+      - '.github/workflows/build-langlibs-paper.yml'
+      - 'gradle/**'
+      - 'buildSrc/**'
+      - 'langlibs-api/**'
 
 jobs:
   build:

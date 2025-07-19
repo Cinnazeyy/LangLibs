@@ -3,14 +3,20 @@ name: Build & Upload LangUI-Paper
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - 'langui-paper/**'
+      - '.github/workflows/build-langui-paper.yml'
+      - 'gradle/**'
+      - 'buildSrc/**'
+      - 'langlibs-api/**'
   pull_request:
     branches: [ "master" ]
-  path:
-    - 'langui-paper/**'
-    - '.github/workflows/build-langui-paper.yml'
-    - 'gradle/**'
-    - 'buildSrc/**'
-    - 'langlibs-api/**'
+    paths:
+      - 'langui-paper/**'
+      - '.github/workflows/build-langui-paper.yml'
+      - 'gradle/**'
+      - 'buildSrc/**'
+      - 'langlibs-api/**'
 
 jobs:
   build:
