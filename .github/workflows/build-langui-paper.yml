@@ -1,0 +1,37 @@
+name: Build & Upload LangUI-Paper
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  path:
+    - 'langui-paper/**'
+    - '.github/workflows/build-langui-paper.yml'
+    - 'gradle/**'
+    - 'buildSrc/**'
+    - 'langlibs-api/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build with Gradle
+        run: ./gradlew :LangUI-Paper:build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Staging-Build
+          path: langui-paper/build/libs
+          compression-level: '9'

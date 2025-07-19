@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LangLibs.iml" filepath="$PROJECT_DIR$/LangLibs.iml" />
       <module fileurl="file://$PROJECT_DIR$/langlibs-api/LangLibs-API.iml" filepath="$PROJECT_DIR$/langlibs-api/LangLibs-API.iml" />
-      <module fileurl="file://$PROJECT_DIR$/langlibs-paper/LangLibs-Paper.iml" filepath="$PROJECT_DIR$/langlibs-paper/LangLibs-Paper.iml" />
-      <module fileurl="file://$PROJECT_DIR$/langui-paper.iml" filepath="$PROJECT_DIR$/langui-paper.iml" />
     </modules>
   </component>
 </project>

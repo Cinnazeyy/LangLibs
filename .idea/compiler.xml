@@ -7,9 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="LangLibs-API" />
-        <module name="LangLibs-Paper" />
-        <module name="langui-paper" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="LangLibs (1)" target="21" />
+      <module name="LangLibs-Paper" target="21" />
+      <module name="LangUI-Paper" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
