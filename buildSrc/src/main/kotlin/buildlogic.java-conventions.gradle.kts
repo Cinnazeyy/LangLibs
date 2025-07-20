@@ -4,7 +4,6 @@
 
 plugins {
     `java-library`
-    `maven-publish`
 }
 
 repositories {
@@ -27,5 +26,14 @@ repositories {
 }
 
 group = "li.cinnazeyy"
-version = "1.5.1" // Only for the Plugins
+version = "1.5.1" // Only for the Plugins - Overridden by the gitVersion closure in the main build.gradle.kts
 java.sourceCompatibility = JavaVersion.VERSION_21
+
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
+tasks.withType<Javadoc> {
+    options.encoding = "UTF-8"
+}

@@ -4,9 +4,37 @@
 
 plugins {
     id("buildlogic.java-conventions")
+    alias(libs.plugins.palantir.git.version)
+    alias(libs.plugins.gradleup.shadow)
 }
 
 dependencies {
-    api(project(":LangLibs-API"))
+    implementation(project(path = ":LangLibs-API", configuration = "shadow"))
     compileOnly(libs.io.papermc.paper.paper.api)
+}
+
+val gitVersion: groovy.lang.Closure<String> by extra
+version = gitVersion() // last tag + commit distance + short hash
+
+tasks.shadowJar {
+    exclude("org/slf4j/**")
+    archiveClassifier = ""
+}
+
+tasks.assemble {
+    dependsOn(tasks.shadowJar) // Ensure that the shadowJar task runs before the build task
+}
+
+tasks.jar {
+    enabled = false // Disable the default jar task since we are using shadowJar
+}
+
+tasks.processResources {
+    // work around IDEA-296490
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    with(copySpec {
+        from("langui-paper/src/main/resources/plugin.yml") {
+            expand("version" to version)
+        }
+    })
 }

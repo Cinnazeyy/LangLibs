@@ -18,3 +18,7 @@ commons-io-commons-io = { module = "commons-io:commons-io", version.ref = "commo
 io-papermc-paper-paper-api = { module = "io.papermc.paper:paper-api", version.ref = "io-papermc-paper-paper-api" }
 org-mariadb-jdbc-mariadb-java-client = { module = "org.mariadb.jdbc:mariadb-java-client", version.ref = "org-mariadb-jdbc-mariadb-java-client" }
 org-spongepowered-configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "org-spongepowered-configurate-yaml" }
+
+[plugins]
+palantir-git-version = { id = "com.palantir.git-version", version = "4.0.0" }
+gradleup-shadow      = { id = "com.gradleup.shadow",    version = "9.0.0-rc1" }
