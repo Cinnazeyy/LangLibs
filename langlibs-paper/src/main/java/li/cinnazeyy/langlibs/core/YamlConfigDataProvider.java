@@ -5,6 +5,7 @@ import li.cinnazeyy.langlibs.core.config.ConfigDataProvider;
 import li.cinnazeyy.langlibs.core.config.LanguageConfig;
 import li.cinnazeyy.langlibs.core.config.MainConfig;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;

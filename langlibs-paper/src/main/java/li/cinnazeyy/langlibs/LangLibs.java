@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.ConfigurateException;
 
-import java.io.File;
+import java.nio.file.Files;
 
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
@@ -73,8 +73,8 @@ public final class LangLibs extends JavaPlugin {
     }
 
     public void createConfig(String configFileName) {
-        File file = getDataPath().resolve(configFileName).toFile();
-        if (!file.exists()) saveResource(configFileName, false);
+        if (Files.exists(getDataPath().resolve(configFileName))) return;
+        saveResource(configFileName, false);
     }
 
     @Override
