@@ -3,6 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/langlibs-api/LangLibs-API.iml" filepath="$PROJECT_DIR$/langlibs-api/LangLibs-API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/langlibs-paper/LangLibs-Paper.iml" filepath="$PROJECT_DIR$/langlibs-paper/LangLibs-Paper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/langlibs-velocity/LangLibs-Velocity.iml" filepath="$PROJECT_DIR$/langlibs-velocity/LangLibs-Velocity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/langlibs-api/LangLibs.LangLibs-API.main.iml" filepath="$PROJECT_DIR$/.idea/modules/langlibs-api/LangLibs.LangLibs-API.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/langlibs-paper/LangLibs.LangLibs-Paper.main.iml" filepath="$PROJECT_DIR$/.idea/modules/langlibs-paper/LangLibs.LangLibs-Paper.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/langlibs-velocity/LangLibs.LangLibs-Velocity.main.iml" filepath="$PROJECT_DIR$/.idea/modules/langlibs-velocity/LangLibs.LangLibs-Velocity.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/langui-paper/LangLibs.LangUI-Paper.main.iml" filepath="$PROJECT_DIR$/.idea/modules/langui-paper/LangLibs.LangUI-Paper.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/langui-paper/langui-paper.iml" filepath="$PROJECT_DIR$/langui-paper/langui-paper.iml" />
     </modules>
   </component>
 </project>
