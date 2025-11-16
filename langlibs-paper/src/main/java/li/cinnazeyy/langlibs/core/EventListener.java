@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,13 +18,12 @@ import static net.kyori.adventure.text.Component.text;
 
 public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onJoin(PlayerJoinEvent event) {
+    public void onJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Bukkit.getScheduler().runTaskAsynchronously(LangLibs.getPlugin(), () -> {
             String uuid = player.getUniqueId().toString();
             try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(uuid).executeQuery()) {
-                if (!rsUser.next()) LangLibAPI.setPlayerLang(player,"en_GB");
-                else LangLibAPI.setPlayerLang(player,rsUser.getString(2));
+                if (rsUser.next()) LangLibAPI.setPlayerLang(player,rsUser.getString(2));
                 DatabaseConnection.closeResultSet(rsUser);
             } catch (SQLException e) {
                 LangLibs.getPlugin().getComponentLogger().error(text("A SQL error occurred!"), e);

@@ -1,6 +1,5 @@
 package li.cinnazeyy.langlibs.core.language;
 
-import com.destroystokyo.paper.ClientOption;
 import li.cinnazeyy.langlibs.core.LangLibAPI;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
 import li.cinnazeyy.langlibs.core.file.LanguageFileFactory;
@@ -139,7 +138,7 @@ public class LanguageUtil extends LanguageFileFactory {
     }
 
     @SuppressWarnings("unused")
-    public String getLocaleTagByPlayer(Player player) {
-        return player != null ? player.getClientOption(ClientOption.LOCALE) : null;
+    public static String getLocaleTagByPlayer(Player player) {
+        return player != null ? player.locale().toString() : null;
     }
 }
