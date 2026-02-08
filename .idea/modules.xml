@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/langlibs-api/LangLibs-API.iml" filepath="$PROJECT_DIR$/langlibs-api/LangLibs-API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/langlibs-api/LangLibs.LangLibs-API.main.iml" filepath="$PROJECT_DIR$/.idea/modules/langlibs-api/LangLibs.LangLibs-API.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/langlibs-paper/LangLibs.LangLibs-Paper.main.iml" filepath="$PROJECT_DIR$/.idea/modules/langlibs-paper/LangLibs.LangLibs-Paper.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/langui-paper/LangLibs.LangUI-Paper.main.iml" filepath="$PROJECT_DIR$/.idea/modules/langui-paper/LangLibs.LangUI-Paper.main.iml" />
     </modules>
   </component>
 </project>

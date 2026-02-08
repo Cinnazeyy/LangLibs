@@ -9,7 +9,7 @@
         <module name="LangLibs-API" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21">
       <module name="LangLibs (1)" target="21" />
       <module name="LangLibs-Paper" target="21" />
       <module name="LangUI-Paper" target="21" />
