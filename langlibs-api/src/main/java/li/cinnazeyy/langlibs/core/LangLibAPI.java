@@ -2,6 +2,7 @@ package li.cinnazeyy.langlibs.core;
 
 import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
+import li.cinnazeyy.langlibs.core.language.LanguageUtil;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -37,7 +38,16 @@ public class LangLibAPI {
         if (lang != null) return lang;
         else {
             try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(playerUUID.toString()).executeQuery()) {
-                if (rsUser.next()) playerLocale.put(UUID.fromString(rsUser.getString(1)),rsUser.getString(2));
+                if (rsUser.next()) {
+                    playerLocale.put(UUID.fromString(rsUser.getString(1)),rsUser.getString(2));
+                } else {
+                    Player p = Bukkit.getPlayer(playerUUID);
+                    if (p != null) {
+                        playerLocale.put(playerUUID, LanguageUtil.getLocaleTagByPlayer(p));
+                    } else {
+                        playerLocale.put(playerUUID, "en_US");
+                    }
+                }
                 DatabaseConnection.closeResultSet(rsUser);
             } catch (SQLException e) {
                 logger.error("A SQL error occurred!", e);
