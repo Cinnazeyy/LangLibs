@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.serialize.SerializationException;
+import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.BufferedReader;
@@ -30,7 +31,7 @@ public class LanguageFile {
 
     public String[] additionalLang;
     private CommentedConfigurationNode root = null;
-
+    private boolean lastTranslationNotSuccessful = false;
 
     public LanguageFile(@NotNull Plugin plugin, double version, Language lang) {
         this.plugin = plugin;
@@ -39,6 +40,7 @@ public class LanguageFile {
         this.filePath = plugin.getDataPath().toAbsolutePath().resolve(Paths.get("lang", lang + ".yml"));
 
         languageLoader = YamlConfigurationLoader.builder()
+                .nodeStyle(NodeStyle.BLOCK)
                 .path(filePath)
                 .build();
 
@@ -60,7 +62,8 @@ public class LanguageFile {
 
     public String getTranslation(@NotNull String key) {
         String translation = root.node((Object[]) key.split("\\.")).getString();
-        return translation != null ? translation : "undefined";
+        lastTranslationNotSuccessful = translation == null;
+        return translation != null ? translation : "undefined (" + getFileName() + ": " + key + ")";
     }
 
     public String getTranslation(String key, String @NotNull ... args) {
@@ -71,11 +74,14 @@ public class LanguageFile {
 
     public List<String> getTranslations(@NotNull String key) {
         try {
-            return root.node((Object[]) key.split("\\.")).getList(String.class);
+            var list = root.node((Object[]) key.split("\\.")).getList(String.class);
+            lastTranslationNotSuccessful = false;
+            return list;
         } catch (SerializationException e) {
             plugin.getComponentLogger().error("Could not parse string list in language file {} with key {}!", filePath.toString(), key);
         }
-        return List.of("undefined");
+        lastTranslationNotSuccessful = true;
+        return List.of("undefined (" + getFileName() + ": " + key + ")");
     }
 
     public List<String> getTranslations(String key, String @NotNull ... args) {
@@ -90,6 +96,15 @@ public class LanguageFile {
 
     public InputStream getDefaultFileStream() {
         return plugin.getResource("lang/" + filePath.toFile().getName());
+    }
+
+    public void setTranslation(String key, Object value) {
+        try {
+            root.node((Object[]) key.split("\\.")).raw(value);
+            saveFile();
+        } catch (ConfigurateException e) {
+            plugin.getComponentLogger().error("Could not set key {} in language file {} with value {}!", key, filePath.toString(), value);
+        }
     }
 
     public List<String> readDefaultFile() {
@@ -116,4 +131,6 @@ public class LanguageFile {
             plugin.getComponentLogger().error(Component.text("Could not properly load language file" + filePath), e);
         }
     }
+
+    public boolean lastTranslationWasNotSuccessful() {return lastTranslationNotSuccessful;}
 }

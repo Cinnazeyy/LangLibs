@@ -1,6 +1,5 @@
 package li.cinnazeyy.langlibs.core.language;
 
-import com.destroystokyo.paper.ClientOption;
 import li.cinnazeyy.langlibs.core.LangLibAPI;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
 import li.cinnazeyy.langlibs.core.file.LanguageFileFactory;
@@ -38,8 +37,13 @@ public class LanguageUtil extends LanguageFileFactory {
 
     @SuppressWarnings("unused")
     public String get(CommandSender sender, String key) {
-        return (sender instanceof Player ? getLanguageFileByPlayer(((Player) sender).getUniqueId()) :
-                languageFiles[0]).getTranslation(key);
+        if (sender instanceof Player p) {
+            var languageFile = getLanguageFileByPlayer(p.getUniqueId());
+            var translation = languageFile.getTranslation(key);
+            if (languageFile.lastTranslationWasNotSuccessful()) translation = languageFiles[0].getTranslation(key);
+            return translation;
+        }
+        return languageFiles[0].getTranslation(key);
     }
 
     @SuppressWarnings("unused")
@@ -49,8 +53,13 @@ public class LanguageUtil extends LanguageFileFactory {
 
     @SuppressWarnings("unused")
     public String get(CommandSender sender, String key, String... args) {
-        return (sender instanceof Player ? getLanguageFileByPlayer(((Player) sender).getUniqueId()) :
-                languageFiles[0]).getTranslation(key, args);
+        if (sender instanceof Player p) {
+            var languageFile = getLanguageFileByPlayer(p.getUniqueId());
+            var translation = languageFile.getTranslation(key, args);
+            if (languageFile.lastTranslationWasNotSuccessful()) translation = languageFiles[0].getTranslation(key, args);
+            return translation;
+        }
+        return languageFiles[0].getTranslation(key, args);
     }
 
     @SuppressWarnings("unused")
@@ -86,8 +95,13 @@ public class LanguageUtil extends LanguageFileFactory {
 
     @SuppressWarnings("unused")
     public List<String> getList(CommandSender sender, String key) {
-        return (sender instanceof Player ? getLanguageFileByPlayer(((Player) sender).getUniqueId()) :
-                languageFiles[0]).getTranslations(key);
+        if (sender instanceof Player p) {
+            var languageFile = getLanguageFileByPlayer(p.getUniqueId());
+            var translation = languageFile.getTranslations(key);
+            if (languageFile.lastTranslationWasNotSuccessful()) translation = languageFiles[0].getTranslations(key);
+            return translation;
+        }
+        return languageFiles[0].getTranslations(key);
     }
 
     @SuppressWarnings("unused")
@@ -97,8 +111,13 @@ public class LanguageUtil extends LanguageFileFactory {
 
     @SuppressWarnings("unused")
     public List<String> getList(CommandSender sender, String key, String... args) {
-        return (sender instanceof Player ? getLanguageFileByPlayer(((Player) sender).getUniqueId()) :
-                languageFiles[0]).getTranslations(key, args);
+        if (sender instanceof Player p) {
+            var languageFile = getLanguageFileByPlayer(p.getUniqueId());
+            var translation = languageFile.getTranslations(key, args);
+            if (languageFile.lastTranslationWasNotSuccessful()) translation = languageFiles[0].getTranslations(key, args);
+            return translation;
+        }
+        return languageFiles[0].getTranslations(key, args);
     }
 
     @SuppressWarnings("unused")
@@ -119,7 +138,7 @@ public class LanguageUtil extends LanguageFileFactory {
     }
 
     @SuppressWarnings("unused")
-    public String getLocaleTagByPlayer(Player player) {
-        return player != null ? player.getClientOption(ClientOption.LOCALE) : null;
+    public static String getLocaleTagByPlayer(Player player) {
+        return player != null ? player.locale().toString() : null;
     }
 }
