@@ -1,5 +1,6 @@
 package li.cinnazeyy.langlibs.core;
 
+import com.destroystokyo.paper.event.player.PlayerClientOptionsChangeEvent;
 import li.cinnazeyy.langlibs.LangLibs;
 import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import org.bukkit.Bukkit;
@@ -10,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +34,12 @@ public class EventListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onDisconnect(PlayerQuitEvent event) {
+    public void onDisconnect(@NonNull PlayerQuitEvent event) {
         LangLibAPI.removePlayerLang(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerClientOptionsChange(@NotNull PlayerClientOptionsChangeEvent e) {
+        LangLibAPI.removePlayerLang(e.getPlayer());
     }
 }
