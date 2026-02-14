@@ -15,12 +15,16 @@ dependencies {
     compileOnly(project(path = ":LangLibs-API", configuration = "shadow"))
 }
 
-val gitVersion: groovy.lang.Closure<String> by extra
-version = gitVersion() // last tag + commit distance + short hash
+val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra
+val details = versionDetails()
+version = "1.5.1" + "-" + details.gitHash + "-SNAPSHOT"
 
 tasks.shadowJar {
     exclude("org/slf4j/**")
     archiveClassifier = ""
+
+    relocationPrefix = "li.cinnazeyy.langui.shaded"
+    enableAutoRelocation = true
 }
 
 tasks.assemble {
@@ -28,6 +32,7 @@ tasks.assemble {
 }
 
 tasks.jar {
+    archiveClassifier = "UNSHADED"
     enabled = false // Disable the default jar task since we are using shadowJar
 }
 
