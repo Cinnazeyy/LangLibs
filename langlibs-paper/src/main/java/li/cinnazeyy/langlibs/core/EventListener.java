@@ -1,8 +1,8 @@
 package li.cinnazeyy.langlibs.core;
 
+import com.alpsbte.alpslib.io.database.SqlHelper;
 import com.destroystokyo.paper.event.player.PlayerClientOptionsChangeEvent;
 import li.cinnazeyy.langlibs.LangLibs;
-import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,9 +24,12 @@ public class EventListener implements Listener {
         Player player = event.getPlayer();
         Bukkit.getScheduler().runTaskAsynchronously(LangLibs.getPlugin(), () -> {
             String uuid = player.getUniqueId().toString();
-            try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(uuid).executeQuery()) {
-                if (rsUser.next()) LangLibAPI.setPlayerLang(player,rsUser.getString(2));
-                DatabaseConnection.closeResultSet(rsUser);
+            try {
+                SqlHelper.runQuery("SELECT uuid, lang FROM langUsers WHERE uuid = ?", ps -> {
+                    ps.setString(1, uuid);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) LangLibAPI.setPlayerLang(player, rs.getString(2));
+                });
             } catch (SQLException e) {
                 LangLibs.getPlugin().getComponentLogger().error(text("A SQL error occurred!"), e);
             }

@@ -1,13 +1,17 @@
 package li.cinnazeyy.langlibs;
 
+import com.alpsbte.alpslib.io.database.DatabaseConnection;
+import com.google.common.io.CharStreams;
 import li.cinnazeyy.langlibs.core.EventListener;
 import li.cinnazeyy.langlibs.core.config.ConfigUtil;
-import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.ConfigurateException;
 
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Objects;
 
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
@@ -35,7 +39,7 @@ public final class LangLibs extends JavaPlugin {
 
         // Initialize database connection
         try {
-            DatabaseConnection.InitializeDatabase(ConfigUtil.getConfig().getCredentials());
+            initDatabase();
             Bukkit.getConsoleSender().sendMessage("Successfully initialized database connection.");
         } catch (Exception ex) {
             Bukkit.getConsoleSender().sendMessage("Could not initialize database connection!");
@@ -87,4 +91,12 @@ public final class LangLibs extends JavaPlugin {
     }
 
     public static LangLibs getPlugin() {return plugin;}
+
+    public void initDatabase() throws IOException, SQLException, ClassNotFoundException {
+        DatabaseConnection.initializeDatabase(ConfigUtil.getConfig().getCredentials(), true);
+        var initScript = CharStreams.toString(Objects.requireNonNull(getTextResource("DATABASE.sql")));
+        try (var con = DatabaseConnection.getConnection(); var s = con.createStatement()) {
+            s.execute(initScript);
+        }
+    }
 }

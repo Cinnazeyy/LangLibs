@@ -11,6 +11,7 @@ org-mariadb-jdbc-mariadb-java-client = "3.5.7" # https://central.sonatype.com/ar
 org-spongepowered-configurate-yaml = "4.2.0" # https://github.com/SpongePowered/Configurate/releases
 git-version = "4.3.0" # https://github.com/palantir/gradle-git-version/releases
 shadow = "9.3.1" # https://github.com/GradleUp/shadow/releases
+alpslib-io = "1.2.1" # https://mvn.alps-bte.com/service/rest/repository/browse/alps-bte/com/alpsbte/alpslib/alpslib-io/
 
 [libraries]
 com-alpsbte-alpslib-alpslib-utils = { module = "com.alpsbte.alpslib:alpslib-utils", version.ref = "com-alpsbte-alpslib-alpslib-utils" }
@@ -20,6 +21,7 @@ commons-io-commons-io = { module = "commons-io:commons-io", version.ref = "commo
 io-papermc-paper-paper-api = { module = "io.papermc.paper:paper-api", version.ref = "io-papermc-paper-paper-api" }
 org-mariadb-jdbc-mariadb-java-client = { module = "org.mariadb.jdbc:mariadb-java-client", version.ref = "org-mariadb-jdbc-mariadb-java-client" }
 org-spongepowered-configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "org-spongepowered-configurate-yaml" }
+alpslib-io = { module = "com.alpsbte.alpslib:alpslib-io", version.ref = "alpslib-io" }
 
 [plugins]
 palantir-git-version = { id = "com.palantir.git-version", version.ref = "git-version" }

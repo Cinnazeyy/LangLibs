@@ -20,7 +20,6 @@ val details = versionDetails()
 version = "1.5.1" + "-" + details.gitHash + "-SNAPSHOT"
 
 tasks.shadowJar {
-    exclude("org/slf4j/**")
     archiveClassifier = ""
 
     relocationPrefix = "li.cinnazeyy.langui.shaded"

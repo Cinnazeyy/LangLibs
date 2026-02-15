@@ -1,6 +1,6 @@
 package li.cinnazeyy.langlibs.core.config;
 
-import li.cinnazeyy.langlibs.core.database.DatabaseCredentials;
+import com.alpsbte.alpslib.io.database.DatabaseSection;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
@@ -11,13 +11,13 @@ public class MainConfig {
     public MainConfig() {}
 
     @Setting("database")
-    private DatabaseCredentials credentials;
+    private DatabaseSection credentials;
 
     @Comment("NOTE: Do not change!")
     @Setting("version")
     private int version;
 
-    public DatabaseCredentials getCredentials() {
+    public DatabaseSection getCredentials() {
         return credentials;
     }
 

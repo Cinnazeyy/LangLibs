@@ -11,8 +11,11 @@ version = "1.5.2"
 
 dependencies {
     api(libs.org.mariadb.jdbc.mariadb.java.client)
-    api(libs.com.zaxxer.hikaricp)
+    api(libs.com.zaxxer.hikaricp) {
+        exclude(group = "org.slf4j")
+    }
     api(libs.org.spongepowered.configurate.yaml)
+    api(libs.alpslib.io) // For the Database Utility Methods
     compileOnly(libs.io.papermc.paper.paper.api)
     compileOnly(libs.commons.io.commons.io)
 }
