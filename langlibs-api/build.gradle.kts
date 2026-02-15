@@ -3,6 +3,7 @@
  */
 
 plugins {
+    `java-library`
     id("buildlogic.java-conventions")
     `maven-publish`
 }
@@ -39,6 +40,9 @@ publishing {
         }
     }
 }
+
+java.sourceCompatibility = JavaVersion.VERSION_21
+java.targetCompatibility = JavaVersion.VERSION_21
 
 java {
     withSourcesJar()

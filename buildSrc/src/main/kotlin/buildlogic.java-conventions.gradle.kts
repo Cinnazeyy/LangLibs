@@ -1,7 +1,3 @@
-plugins {
-    `java-library`
-}
-
 repositories {
     // mavenLocal() // NEVER use in Production/Commits!
     maven {
@@ -22,8 +18,6 @@ repositories {
 }
 
 group = "li.cinnazeyy"
-java.sourceCompatibility = JavaVersion.VERSION_21
-
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
