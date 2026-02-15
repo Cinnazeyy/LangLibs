@@ -1,9 +1,8 @@
 package li.cinnazeyy.langui.util;
 
 import li.cinnazeyy.langlibs.core.LangLibAPI;
-
-import li.cinnazeyy.langlibs.core.language.Language;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
+import li.cinnazeyy.langlibs.core.language.Language;
 import li.cinnazeyy.langlibs.core.language.LanguageUtil;
 import li.cinnazeyy.langui.LangUI;
 import org.bukkit.plugin.Plugin;
@@ -24,6 +23,12 @@ public class LangUtil extends LanguageUtil {
                 new LanguageFile(plugin, 1.0, Language.zh_CN),
                 new LanguageFile(plugin, 1.0, Language.zh_TW, "zh_HK"),
                 new LanguageFile(plugin, 1.0, Language.he_IL),
+                new LanguageFile(plugin, 1.0, Language.da_DK),
+                new LanguageFile(plugin, 1.0, Language.es_ES),
+                new LanguageFile(plugin, 1.0, Language.hu_HU),
+                new LanguageFile(plugin, 1.0, Language.it_IT),
+                new LanguageFile(plugin, 1.0, Language.nl_NL),
+                new LanguageFile(plugin, 1.0, Language.ro_RO),
         });
         langUtilInstance = new LangUtil();
     }
