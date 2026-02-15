@@ -9,7 +9,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(path = ":LangLibs-API", configuration = "shadow"))
+    implementation(project(path = ":LangLibs-API"))
     compileOnly(libs.io.papermc.paper.paper.api)
 }
 

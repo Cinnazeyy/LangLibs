@@ -1,0 +1,6 @@
+menu:
+  select-language: "Vælg Sprog"
+  close: "Luk"
+info:
+  changed-language: "Sproget er ændret til dansk!"
+config-version: 1.0

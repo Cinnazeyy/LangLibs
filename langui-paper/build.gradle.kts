@@ -12,7 +12,7 @@ dependencies {
     implementation(libs.com.alpsbte.canvas)
     implementation(libs.com.alpsbte.alpslib.alpslib.utils)
     compileOnly(libs.io.papermc.paper.paper.api)
-    compileOnly(project(path = ":LangLibs-API", configuration = "shadow"))
+    compileOnly(project(path = ":LangLibs-API"))
 }
 
 val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra

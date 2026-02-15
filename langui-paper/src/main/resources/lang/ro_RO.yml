@@ -1,0 +1,6 @@
+menu:
+  select-language: "Selectează limba"
+  close: "Închide"
+info:
+  changed-language: "Limba schimbată în română!"
+config-version: 1.0

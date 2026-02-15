@@ -1,0 +1,6 @@
+menu:
+  select-language: "Taal selecteren"
+  close: "Sluiten"
+info:
+  changed-language: "Taal gewijzigd naar Nederlands!"
+config-version: 1.0
