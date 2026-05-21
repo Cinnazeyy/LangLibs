@@ -35,7 +35,7 @@ tasks.processResources {
     // work around IDEA-296490
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     with(copySpec {
-        from("langui-paper/src/main/resources/paper-plugin.yml") {
+        from("src/main/resources/paper-plugin.yml") {
             expand("version" to version)
         }
     })

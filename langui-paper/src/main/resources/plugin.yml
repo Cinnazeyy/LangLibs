@@ -1,4 +1,4 @@
 name: LangUI
-version: '${project.version}'
+version: '${version}'
 main: li.cinnazeyy.langui.LangUI
 api-version: '1.21'
