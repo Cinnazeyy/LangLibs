@@ -73,6 +73,21 @@ ro_RO:
   region: "România"
   headId: "21899"
   itemModel: "item_flag_ro"
+cs_SZ:
+  name: "čeština"
+  region: "Česko, Česká republika"
+  headId: "2199"
+  itemModel: "item_flag_cs"
+pl_PL:
+  name: "polski"
+  region: "Polska"
+  headId: "65646"
+  itemModel: "item_flag_pl"
+sk_SK:
+  name: "slovenčina"
+  region: "Slovensko"
+  headId: "14662"
+  itemModel: "item_flag_sk"
 custom_1:
   name: ""
   region: ""
