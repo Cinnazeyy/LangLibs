@@ -3,3 +3,5 @@ menu:
   close: "Zatvoriť"
 info:
   changed-language: "Jazyk zmenený na slovenčinu!"
+# NOTE: Do not change
+config-version: 1.0

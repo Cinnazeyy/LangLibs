@@ -3,4 +3,5 @@ menu:
   close: "Закрыть"
 info:
   changed-language: "Смените язык на английский!"
+# NOTE: Do not change
 config-version: 1.0

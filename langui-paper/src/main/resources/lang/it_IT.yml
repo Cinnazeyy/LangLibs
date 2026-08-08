@@ -3,4 +3,5 @@ menu:
   close: "Chiudi"
 info:
   changed-language: "Lingua cambiata in italiano!"
+# NOTE: Do not change
 config-version: 1.0

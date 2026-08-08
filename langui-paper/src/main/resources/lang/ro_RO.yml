@@ -3,4 +3,5 @@ menu:
   close: "Închide"
 info:
   changed-language: "Limba schimbată în română!"
+# NOTE: Do not change
 config-version: 1.0

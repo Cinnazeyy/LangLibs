@@ -3,4 +3,5 @@ menu:
   close: "סגור"
 info:
   changed-language: "השפה השתנתה לעברית!"
+# NOTE: Do not change
 config-version: 1.0
