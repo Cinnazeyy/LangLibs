@@ -73,7 +73,7 @@ ro_RO:
   region: "România"
   headId: "21899"
   itemModel: "item_flag_ro"
-cs_SZ:
+cs_CZ:
   name: "čeština"
   region: "Česko, Česká republika"
   headId: "2199"
