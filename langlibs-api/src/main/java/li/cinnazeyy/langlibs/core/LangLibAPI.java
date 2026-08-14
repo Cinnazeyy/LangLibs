@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,7 +89,7 @@ public class LangLibAPI {
         });
     }
 
-    public static LanguageFile[] getLanguageFiles(Plugin plugin) {
+    public static LanguageFile @NonNull [] getLanguageFiles(Plugin plugin) {
         LanguageFile[] languageFiles = pluginLangFiles.get(plugin);
         if (languageFiles == null) throw new RuntimeException("LanguageAPI has not been registered yet!");
         return languageFiles;

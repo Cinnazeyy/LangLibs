@@ -1,0 +1,7 @@
+menu:
+  select-language: "Nyelv Kiválasztása"
+  close: "Bezárás"
+info:
+  changed-language: "A nyelvet magyarra változtattuk!"
+# NOTE: Do not change
+config-version: 1.0

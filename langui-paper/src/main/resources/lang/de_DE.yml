@@ -3,5 +3,5 @@ menu:
   close: "Schliessen"
 info:
   changed-language: "Sprache auf Deutsch gestellt!"
-
+# NOTE: Do not change
 config-version: 1.0

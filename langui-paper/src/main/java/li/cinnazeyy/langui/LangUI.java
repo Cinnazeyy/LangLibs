@@ -1,5 +1,6 @@
 package li.cinnazeyy.langui;
 
+import com.alpsbte.alpslib.utils.head.AlpsHeadEventListener;
 import li.cinnazeyy.langui.commands.CMD_Language;
 import li.cinnazeyy.langui.util.LangUtil;
 import org.bukkit.Bukkit;
@@ -36,6 +37,10 @@ public final class LangUI extends JavaPlugin {
 
         // Load config
         createConfig();
+
+        if (LangUI.getPlugin().getConfig().getBoolean("languageSelection.useHeads")) {
+            getServer().getPluginManager().registerEvents(new AlpsHeadEventListener(), this);
+        }
 
         // Load language files
         try {

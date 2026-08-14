@@ -3,6 +3,8 @@ package li.cinnazeyy.langlibs.core.language;
 import li.cinnazeyy.langlibs.core.config.ConfigUtil;
 import li.cinnazeyy.langlibs.core.config.LanguageConfig;
 import li.cinnazeyy.langlibs.core.config.LanguageSection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -17,6 +19,15 @@ public enum Language {
     zh_CN,
     zh_TW,
     he_IL,
+    da_DK,
+    es_ES,
+    hu_HU,
+    it_IT,
+    nl_NL,
+    ro_RO,
+    cs_CZ,
+    pl_PL,
+    sk_SK,
     custom_1,
     custom_2,
     custom_3,
@@ -24,6 +35,8 @@ public enum Language {
     custom_5;
 
     private final String name, region, headId, itemModel;
+
+    private static final Logger logger = LoggerFactory.getLogger(Language.class);
 
     Language() {
         LanguageConfig config = ConfigUtil.getLanguageConfig();
@@ -40,6 +53,7 @@ public enum Language {
             region = "undefined";
             headId = "36076";
             itemModel = "";
+            System.out.println("Language " + this.name() + " is not defined in the config.yml!" + e.getMessage());
         }
 
         this.name = name;

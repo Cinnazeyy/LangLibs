@@ -1,0 +1,7 @@
+menu:
+  select-language: "Wybierz język"
+  close: "Zamknij"
+info:
+  changed-language: "Zmieniono język na Polski!"
+# NOTE: Do not change
+config-version: 1.0

@@ -1,0 +1,7 @@
+menu:
+  select-language: "Vyberte jazyk"
+  close: "Zavřít"
+info:
+  changed-language: "Jazyk změněn na češtinu!"
+# NOTE: Do not change
+config-version: 1.0
