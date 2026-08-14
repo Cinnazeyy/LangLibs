@@ -26,7 +26,7 @@ repositories {
 }
 
 group = "li.cinnazeyy"
-version = "1.5.1" // Only for the Plugins - Overridden by the gitVersion closure in the main build.gradle.kts
+version = "1.6" // Only for the Plugins - Overridden by the gitVersion closure in the main build.gradle.kts
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 

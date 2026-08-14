@@ -18,7 +18,7 @@ import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.format.NamedTextColor.*;
 
 public final class LangLibs extends JavaPlugin {
-    private static final String VERSION = "1.5.1";
+    private static final String VERSION = "1.6";
     private static LangLibs plugin;
     private static YamlConfigDataProvider configProvider;
     private static DataProvider dataProvider;

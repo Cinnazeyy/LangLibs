@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.gradleup.shadow)
 }
 
-version = "1.5.1"
+version = "1.6"
 
 dependencies {
     api(libs.org.mariadb.jdbc.mariadb.java.client)
