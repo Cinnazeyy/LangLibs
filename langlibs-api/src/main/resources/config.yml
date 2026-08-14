@@ -1,3 +1,7 @@
+# Where player language preferences are stored / fetched from.
+# Options: mysql | velocity
+data-source: mysql
+
 database:
   url: ""
   name: ""

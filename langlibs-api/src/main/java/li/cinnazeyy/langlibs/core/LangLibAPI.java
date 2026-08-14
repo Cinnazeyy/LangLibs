@@ -1,7 +1,9 @@
 package li.cinnazeyy.langlibs.core;
 
-import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
+import li.cinnazeyy.langlibs.core.data.DataProvider;
+import li.cinnazeyy.langlibs.core.event.LanguageChangeEvent;
 import li.cinnazeyy.langlibs.core.file.LanguageFile;
+import li.cinnazeyy.langlibs.core.language.Language;
 import li.cinnazeyy.langlibs.core.language.LanguageUtil;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -11,10 +13,6 @@ import org.bukkit.plugin.Plugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -24,8 +22,10 @@ import static net.kyori.adventure.text.Component.text;
 public class LangLibAPI {
 
     private static final HashMap<Plugin, LanguageFile[]> pluginLangFiles = new HashMap<>();
-    private static final HashMap<UUID, String> playerLocale = new HashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(LangLibAPI.class);
+
+    private static DataProvider dataProvider;
+    private static Plugin plugin;
 
     @SuppressWarnings("unused")
     public static void register(Plugin plugin, LanguageFile[] langFiles) {
@@ -33,64 +33,76 @@ public class LangLibAPI {
         Bukkit.getConsoleSender().sendMessage(text("Registered plugin " + plugin.getName() + " to the language system", NamedTextColor.GREEN));
     }
 
+    public static void setDataProvider(DataProvider provider, Plugin owningPlugin) {
+        dataProvider = provider;
+        plugin = owningPlugin;
+        provider.init(owningPlugin);
+    }
+
+    public static DataProvider getDataProvider() {
+        return dataProvider;
+    }
+
     public static String getPlayerLang(UUID playerUUID) {
-        String lang = playerLocale.get(playerUUID);
-        if (lang != null) return lang;
-        else {
-            try (ResultSet rsUser = DatabaseConnection.createStatement("SELECT uuid, lang FROM langUsers WHERE uuid = ?").setValue(playerUUID.toString()).executeQuery()) {
-                if (rsUser.next()) {
-                    playerLocale.put(UUID.fromString(rsUser.getString(1)),rsUser.getString(2));
-                } else {
-                    Player p = Bukkit.getPlayer(playerUUID);
-                    if (p != null) {
-                        playerLocale.put(playerUUID, LanguageUtil.getLocaleTagByPlayer(p));
-                    } else {
-                        playerLocale.put(playerUUID, "en_US");
-                    }
-                }
-                DatabaseConnection.closeResultSet(rsUser);
-            } catch (SQLException e) {
-                logger.error("A SQL error occurred!", e);
-            }
+        if (dataProvider != null) {
+            String lang = dataProvider.getPlayerLang(playerUUID);
+            if (lang != null) return lang;
         }
-        return playerLocale.get(playerUUID);
+        // No persisted value (yet) -> fall back to the client's locale tag.
+        Player p = Bukkit.getPlayer(playerUUID);
+        if (p != null) {
+            String locale = LanguageUtil.getLocaleTagByPlayer(p);
+            if (locale != null) return locale;
+        }
+        return "en_US";
     }
 
     public static void setPlayerLang(Player player, String lang) {
-        playerLocale.put(player.getUniqueId(), lang);
-        String uuid = player.getUniqueId().toString();
-
-        //TODO: Fix SQL Library
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String sql = "INSERT INTO langUsers (uuid, lang) VALUES (?, ?) ON DUPLICATE KEY UPDATE uuid = ?, lang = ?";
-
-            // Create a PreparedStatement
-            try {
-                assert connection != null;
-                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                    // Set the parameter values
-                    preparedStatement.setString(1, uuid);
-                    preparedStatement.setString(2, lang);
-                    preparedStatement.setString(3, uuid);
-                    preparedStatement.setString(4, lang);
-                    preparedStatement.executeUpdate();
-                }
-            } catch (SQLException e) {
-                logger.error("A SQL error occurred!", e);
-            }
-            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
-        } catch (SQLException e) {
-            logger.error("A SQL error occurred!", e);
-        }
+        if (dataProvider == null || plugin == null) return;
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            boolean success = dataProvider.setPlayerLang(player, lang);
+            if (!success) return;
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                if (!player.isOnline()) return;
+                fireLanguageChangeEvent(player, lang);
+                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+            });
+        });
     }
 
-    public static void removePlayerLang(Player player) {
-        playerLocale.remove(player.getUniqueId());
+    public static void removePlayerLang(UUID playerUUID) {
+        if (dataProvider != null) dataProvider.removePlayerLang(playerUUID);
+    }
+
+    public static void loadPlayerLang(Player player) {
+        if (dataProvider == null || plugin == null) return;
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            boolean loaded = dataProvider.loadPlayerLang(player);
+            if (!loaded) return;
+            String lang = dataProvider.getPlayerLang(player.getUniqueId());
+            if (lang == null) return;
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                if (!player.isOnline()) return;
+                fireLanguageChangeEvent(player, lang);
+            });
+        });
     }
 
     public static LanguageFile[] getLanguageFiles(Plugin plugin) {
         LanguageFile[] languageFiles = pluginLangFiles.get(plugin);
         if (languageFiles == null) throw new RuntimeException("LanguageAPI has not been registered yet!");
         return languageFiles;
+    }
+
+    private static void fireLanguageChangeEvent(Player player, String lang) {
+        if (plugin == null) {
+            logger.warn("Cannot fire LanguageChangeEvent: no plugin reference available.");
+            return;
+        }
+        try {
+            Bukkit.getPluginManager().callEvent(new LanguageChangeEvent(player, Language.valueOf(lang)));
+        } catch (IllegalArgumentException ex) {
+            logger.warn("Unknown language '{}' for {} - skipping LanguageChangeEvent", lang, player.getName());
+        }
     }
 }
