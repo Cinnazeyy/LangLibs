@@ -1,25 +1,27 @@
 package li.cinnazeyy.langlibs;
 
-import com.alpsbte.alpslib.io.database.DatabaseConnection;
-import com.google.common.io.CharStreams;
 import li.cinnazeyy.langlibs.core.EventListener;
+import li.cinnazeyy.langlibs.core.YamlConfigDataProvider;
 import li.cinnazeyy.langlibs.core.config.ConfigUtil;
+import li.cinnazeyy.langlibs.core.data.DataProvider;
+import li.cinnazeyy.langlibs.core.data.MysqlDataProvider;
+import li.cinnazeyy.langlibs.core.data.VelocityDataProvider;
+import li.cinnazeyy.langlibs.core.LangLibAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.ConfigurateException;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Objects;
+import java.nio.file.Files;
 
 import static net.kyori.adventure.text.Component.empty;
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.format.NamedTextColor.*;
 
 public final class LangLibs extends JavaPlugin {
-    private static final String VERSION = "1.5.1";
+    private static final String VERSION = "1.6";
     private static LangLibs plugin;
+    private static YamlConfigDataProvider configProvider;
+    private static DataProvider dataProvider;
 
     @Override
     public void onEnable() {
@@ -29,7 +31,8 @@ public final class LangLibs extends JavaPlugin {
         createConfig("config.yml");
         createConfig("languages.yml");
         try {
-            ConfigUtil.init(this);
+            configProvider = new YamlConfigDataProvider();
+            ConfigUtil.init(configProvider);
         } catch (ConfigurateException e) {
             this.getComponentLogger().warn(text("Could not load configuration files!"), e);
             Bukkit.getConsoleSender().sendMessage(text("The config files must be configured!", YELLOW));
@@ -37,13 +40,8 @@ public final class LangLibs extends JavaPlugin {
             return;
         }
 
-        // Initialize database connection
-        try {
-            initDatabase();
-            Bukkit.getConsoleSender().sendMessage("Successfully initialized database connection.");
-        } catch (Exception ex) {
-            Bukkit.getConsoleSender().sendMessage("Could not initialize database connection!");
-            LangLibs.getPlugin().getComponentLogger().error(text(ex.getMessage()), ex);
+        // Initialize data provider
+        if (!initDataProvider()) {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -75,28 +73,48 @@ public final class LangLibs extends JavaPlugin {
     }
 
     public void createConfig(String configFileName) {
-        File file = getDataPath().resolve(configFileName).toFile();
-        if (!file.exists()) saveResource(configFileName, false);
+        if (Files.exists(getDataPath().resolve(configFileName))) return;
+        saveResource(configFileName, false);
+    }
+
+    private boolean initDataProvider() {
+        String source = ConfigUtil.getConfig().getDataSource();
+        switch (source) {
+            case "mysql","velocity" -> {}
+            default -> {
+                Bukkit.getConsoleSender().sendMessage(text("Unknown 'data-source' value: " + source + ". Falling back to mysql.", YELLOW));
+                source = "mysql";
+            }
+        }
+
+        // suppressed for now, since there will likely be more types in the future
+        //noinspection SwitchStatementWithTooFewBranches
+        dataProvider = switch (source) {
+            case "velocity" -> new VelocityDataProvider();
+            default -> new MysqlDataProvider(ConfigUtil.getConfig().getCredentials());
+        };
+
+        try {
+            LangLibAPI.setDataProvider(dataProvider, this);
+        } catch (Exception e) {
+            Bukkit.getConsoleSender().sendMessage(text("Could not initialize data provider!", RED));
+            LangLibs.getPlugin().getComponentLogger().error(text(e.getMessage()), e);
+            return false;
+        }
+
+        Bukkit.getConsoleSender().sendMessage(text("Using '" + source + "' data provider.", AQUA));
+        return true;
     }
 
     @Override
     public void reloadConfig() {
-        try {
-            ConfigUtil.reloadAllConfigs();
-        } catch (ConfigurateException e) {
-            this.getComponentLogger().warn(text("Could not load configuration files!"));
-            Bukkit.getConsoleSender().sendMessage(text("The config files must be configured!", YELLOW));
-            this.getServer().getPluginManager().disablePlugin(this);
-        }
+        configProvider.reloadAllConfigs();
+    }
+
+    @Override
+    public void onDisable() {
+        if (dataProvider != null) dataProvider.close();
     }
 
     public static LangLibs getPlugin() {return plugin;}
-
-    public void initDatabase() throws IOException, SQLException, ClassNotFoundException {
-        DatabaseConnection.initializeDatabase(ConfigUtil.getConfig().getCredentials(), true);
-        var initScript = CharStreams.toString(Objects.requireNonNull(getTextResource("DATABASE.sql")));
-        try (var con = DatabaseConnection.getConnection(); var s = con.createStatement()) {
-            s.execute(initScript);
-        }
-    }
 }
