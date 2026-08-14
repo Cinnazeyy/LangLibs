@@ -18,6 +18,9 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+    implementation(libs.com.zaxxer.hikaricp)
+    implementation(libs.org.mariadb.jdbc.mariadb.java.client)
+    implementation(libs.org.spongepowered.configurate.yaml)
 }
 
 val gitVersion: groovy.lang.Closure<String> by extra
