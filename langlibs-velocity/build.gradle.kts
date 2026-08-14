@@ -3,6 +3,7 @@
  */
 
 plugins {
+    java
     id("buildlogic.java-conventions")
     alias(libs.plugins.palantir.git.version)
     alias(libs.plugins.gradleup.shadow)

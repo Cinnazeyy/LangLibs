@@ -1,13 +1,18 @@
 package li.cinnazeyy.langlibs.core.data;
 
-import li.cinnazeyy.langlibs.core.database.DatabaseConnection;
-import li.cinnazeyy.langlibs.core.database.DatabaseCredentials;
+import com.alpsbte.alpslib.io.database.DatabaseConnection;
+import com.alpsbte.alpslib.io.database.DatabaseSection;
+import com.alpsbte.alpslib.io.database.SqlHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -21,22 +26,39 @@ public class MysqlDataProvider implements DataProvider {
     private static final Logger logger = LoggerFactory.getLogger(MysqlDataProvider.class);
 
     private static final String SELECT_LANG = "SELECT uuid, lang FROM langUsers WHERE uuid = ?";
-    private static final String UPSERT_LANG = "INSERT INTO langUsers (uuid, lang) VALUES (?, ?) ON DUPLICATE KEY UPDATE lang = ?";
+    private static final String UPSERT_LANG = "INSERT INTO langUsers (uuid, lang) VALUES (?, ?) ON DUPLICATE KEY UPDATE uuid = ?, lang = ?";
 
     private final Map<UUID, String> cache = new HashMap<>();
-    private final DatabaseCredentials credentials;
+    private final DatabaseSection credentials;
 
-    public MysqlDataProvider(DatabaseCredentials credentials) {
+    public MysqlDataProvider(DatabaseSection credentials) {
         this.credentials = credentials;
     }
 
     @Override
     public void init(Plugin plugin) {
         try {
-            DatabaseConnection.InitializeDatabase(credentials);
+            DatabaseConnection.initializeDatabase(credentials, true);
+            String initScript = readResource(plugin, "DATABASE.sql");
+            try (var con = DatabaseConnection.getConnection(); var s = con.createStatement()) {
+                s.execute(initScript);
+            }
             Bukkit.getConsoleSender().sendMessage(text("Successfully initialized database connection.", GREEN));
         } catch (Exception e) {
             throw new RuntimeException("Could not initialize database connection", e);
+        }
+    }
+
+    private static String readResource(Plugin plugin, String name) throws Exception {
+        InputStream in = plugin.getResource(name);
+        if (in == null) throw new IllegalStateException("Resource not found: " + name);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+            return sb.toString();
         }
     }
 
@@ -54,11 +76,13 @@ public class MysqlDataProvider implements DataProvider {
     public boolean setPlayerLang(Player player, String lang) {
         cache.put(player.getUniqueId(), lang);
         try {
-            DatabaseConnection.createStatement(UPSERT_LANG)
-                    .setValue(player.getUniqueId().toString())
-                    .setValue(lang)
-                    .setValue(lang)
-                    .executeUpdate();
+            SqlHelper.runQuery(UPSERT_LANG, ps -> {
+                ps.setString(1, player.getUniqueId().toString());
+                ps.setString(2, lang);
+                ps.setString(3, player.getUniqueId().toString());
+                ps.setString(4, lang);
+                ps.executeUpdate();
+            });
             return true;
         } catch (SQLException e) {
             logger.error("A SQL error occurred while saving player language!", e);
@@ -69,20 +93,21 @@ public class MysqlDataProvider implements DataProvider {
     @Override
     public boolean loadPlayerLang(Player player) {
         final UUID uuid = player.getUniqueId();
-        try (ResultSet rs = DatabaseConnection
-                .createStatement(SELECT_LANG)
-                .setValue(uuid.toString())
-                .executeQuery()) {
-            if (rs.next()) {
-                String lang = rs.getString(2);
-                cache.put(uuid, lang);
-                return true;
-            }
-            DatabaseConnection.closeResultSet(rs);
+        final boolean[] loaded = {false};
+        try {
+            SqlHelper.runQuery(SELECT_LANG, ps -> {
+                ps.setString(1, uuid.toString());
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        cache.put(uuid, rs.getString(2));
+                        loaded[0] = true;
+                    }
+                }
+            });
         } catch (SQLException e) {
             logger.error("A SQL error occurred while loading player language!", e);
         }
-        return false;
+        return loaded[0];
     }
 
     @Override

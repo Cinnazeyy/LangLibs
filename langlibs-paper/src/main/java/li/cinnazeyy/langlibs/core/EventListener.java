@@ -1,5 +1,6 @@
 package li.cinnazeyy.langlibs.core;
 
+import com.destroystokyo.paper.event.player.PlayerClientOptionsChangeEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,6 +22,6 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerClientOptionsChange(@NotNull PlayerClientOptionsChangeEvent e) {
-        LangLibAPI.removePlayerLang(e.getPlayer());
+        LangLibAPI.removePlayerLang(e.getPlayer().getUniqueId());
     }
 }
