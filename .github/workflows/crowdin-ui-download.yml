@@ -72,7 +72,7 @@ jobs:
           project_id: ${{ vars.CROWDIN_PROJECT_ID }}
           token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
-          source: "langui-paper/src/main/resources/langen_GB.yml"
+          source: "langui-paper/src/main/resources/lang/en_GB.yml"
           translation: "langui-paper/src/main/resources/lang/%locale_with_underscore%.%file_extension%"
 
           download_translations_args: '--dest=LangLibsUI.yml'
