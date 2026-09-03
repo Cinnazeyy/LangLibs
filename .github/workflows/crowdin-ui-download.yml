@@ -80,7 +80,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check Crowdin branch
+        id: crowdin_branch
+        shell: bash
+        run: |
+          BRANCH="l10n_crowdin_translations"
+
+          if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout Crowdin branch
+        if: steps.crowdin_branch.outputs.exists == 'true'
         shell: bash
         run: |
           sudo chown -R "$USER:$USER" "$GITHUB_WORKSPACE"
